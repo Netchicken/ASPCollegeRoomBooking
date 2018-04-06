@@ -33,18 +33,21 @@
             </div>
             <div class="form-group">
                 <label asp-for="Start" class="control-label" }></label>
+
+
                 @*<input asp-for="Start" class="form-control" />
                     <br/>*@
                 @*@Html.TextBoxFor(model => model.Start,htmlAttributes: new { @class = "form-control, datetimepicker" })*@
                 @Html.TextBoxFor(model => model.Start,
-                                                            htmlAttributes: new { @class = "form-control datetimepicker" })
+                                                                                                                                htmlAttributes: new { @class = "form-control DTStart" })
+
                 <span asp-validation-for="Start" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="End" class="control-label"></label>
                 @*<input asp-for="End" class="form-control" id="#form_datetime"/>*@
                 @Html.TextBoxFor(model => model.End,
-                                                            htmlAttributes: new { @class = "form-control DTEnd" })
+                                                                                                                                       htmlAttributes: new { @class = "form-control DTEnd" })
                 <span asp-validation-for="End" class="text-danger"></span>
             </div>
 
@@ -59,27 +62,26 @@
 </div>
 @section scripts
     {
-    <script>$(document).ready(function () {
-            $(".datetimepicker").datetimepicker({
-                format: 'DD-MM-YYYY HH:mm'
+    <script>
+$(document).ready(function () {
+            $(".DTStart").datetimepicker({
+                format: 'DD-MM-YYYY HH:mm',
+                inline: true,
+                sideBySide: true,
+                toolbarPlacement: 'bottom'
             });
 
         });
 
-        $(document).ready(function () {
-            //var today = new Date();
-            //var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-            //var time = today.getHours() + ":" + today.getMinutes();
-            //var dateTime = date + ' ' + time;
+$(document).ready(function () {
 
             //http://eonasdan.github.io/bootstrap-datetimepicker/
 
             $(".DTEnd").datetimepicker({
-                format: 'DD-MM-YYYY HH:mm'
-               , daysOfWeekDisabled: [0, 6]
-                //, autoclose: true,
-                //todayBtn: true,
-                //startDate: dateTime
-            });
+                format: 'DD-MM-YYYY HH:mm',
+               inline: true,
+                sideBySide: true,
+                toolbarPlacement: 'top'
+      });
         });</script>
 }
