@@ -10,6 +10,7 @@
     "fullcalendar": "v3.6.2",
     "jQuery": "3.2.1",
     "jquery-ui": "jqueryui#1.12.1",
-    "qtip2": "qtip2-main#v3.0.3"
+    "qtip2": "qtip2-main#v3.0.3",
+    "eonasdan-bootstrap-datetimepicker": "4.17.47"
   }
 }
