@@ -11,57 +11,57 @@ using ASPCollegeBooking.Models;
 namespace ASPCollegeBooking.Controllers
 {
     [Produces("application/json")]
-    [Route("api/EventsApi")]
-    public class EventsApiController : Controller
+    [Route("api/RoomsAPI")]
+    public class RoomsApiController : Controller
     {
         private readonly BookingContext _context;
 
-        public EventsApiController(BookingContext context)
+        public RoomsApiController(BookingContext context)
         {
             _context = context;
         }
 
-        // GET: api/EventsApi
+        // GET: api/RoomsAPI
         [HttpGet]
-        public IEnumerable<Events> GetEvents()
+        public IEnumerable<Rooms> GetRooms()
         {
-            return _context.Events;
+            return _context.Rooms;
         }
 
-        // GET: api/EventsApi/5
+        // GET: api/RoomsAPI/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetEvents([FromRoute] string id)
+        public async Task<IActionResult> GetRooms([FromRoute] string id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var events = await _context.Events.SingleOrDefaultAsync(m => m.ID == id);
+            var rooms = await _context.Rooms.SingleOrDefaultAsync(m => m.ID == id);
 
-            if (events == null)
+            if (rooms == null)
             {
                 return NotFound();
             }
 
-            return Ok(events);
+            return Ok(rooms);
         }
 
-        // PUT: api/EventsApi/5
+        // PUT: api/RoomsAPI/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEvents([FromRoute] string id, [FromBody] Events events)
+        public async Task<IActionResult> PutRooms([FromRoute] string id, [FromBody] Rooms rooms)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != events.ID)
+            if (id != rooms.ID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(events).State = EntityState.Modified;
+            _context.Entry(rooms).State = EntityState.Modified;
 
             try
             {
@@ -69,7 +69,7 @@ namespace ASPCollegeBooking.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EventsExists(id))
+                if (!RoomsExists(id))
                 {
                     return NotFound();
                 }
@@ -82,45 +82,45 @@ namespace ASPCollegeBooking.Controllers
             return NoContent();
         }
 
-        // POST: api/EventsApi
+        // POST: api/RoomsAPI
         [HttpPost]
-        public async Task<IActionResult> PostEvents([FromBody] Events events)
+        public async Task<IActionResult> PostRooms([FromBody] Rooms rooms)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Events.Add(events);
+            _context.Rooms.Add(rooms);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEvents", new { id = events.ID }, events);
+            return CreatedAtAction("GetRooms", new { id = rooms.ID }, rooms);
         }
 
-        // DELETE: api/EventsApi/5
+        // DELETE: api/RoomsAPI/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEvents([FromRoute] string id)
+        public async Task<IActionResult> DeleteRooms([FromRoute] string id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var events = await _context.Events.SingleOrDefaultAsync(m => m.ID == id);
-            if (events == null)
+            var rooms = await _context.Rooms.SingleOrDefaultAsync(m => m.ID == id);
+            if (rooms == null)
             {
                 return NotFound();
             }
 
-            _context.Events.Remove(events);
+            _context.Rooms.Remove(rooms);
             await _context.SaveChangesAsync();
 
-            return Ok(events);
+            return Ok(rooms);
         }
 
-        private bool EventsExists(string id)
+        private bool RoomsExists(string id)
         {
-            return _context.Events.Any(e => e.ID == id);
+            return _context.Rooms.Any(e => e.ID == id);
         }
     }
 }
