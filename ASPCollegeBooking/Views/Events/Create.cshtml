@@ -4,7 +4,6 @@
         ViewData["Title"] = "Create a New Event";
     }*@
 <h2>Create a New Event</h2>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -17,13 +16,13 @@
                 </div>
                 <label class="control-label">Choose Your Room</label>
                 @{
-                    //  IEnumerable<SelectList> Roomlist = ViewBag.Roomlist;
+                    //  IEnumerable<SelectList>Roomlist = ViewBag.Roomlist;
 
                     // <select asp-for="ResourceId" asp-items="ViewBag.Roomlist">
 
-                    //asp-items="@((List<SelectListItem>)ViewData["Numbers"]
+                    //asp-items="@((List <SelectListItem>)ViewData["Numbers"]
 
-                    //<select asp-for="ResourceId" class="form-control" asp-items="@((List<SelectListItem>)ViewData["Roomlist"])"></select>
+                    //<select asp-for="ResourceId" class="form-control" asp-items="@((List<SelectListItem>)ViewData[" Roomlist"])"></select>
                 }
                 <select asp-for="ResourceId" asp-items="ViewBag.Roomlist" class="form-control">
                     <option>Please select one</option>
@@ -31,25 +30,39 @@
                 @* <input asp-for="ResourceId" class="form-control" />*@
                 <span asp-validation-for="ResourceId" class="text-danger"></span>
             </div>
+
+
+
+
             <div class="form-group">
+                <label class="control-label">Tick if its for a Full Day</label>
+                @*<label asp-for="IsFullDay" class="control-label"></label>*@
+                <input type="checkbox" asp-for="IsFullDay" class="form-control" id="chkFullDay" />
+                <span asp-validation-for="IsFullDay" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" id="datestart">
                 <label asp-for="Start" class="control-label" }></label>
-
-
-                @*<input asp-for="Start" class="form-control" />
-                    <br/>*@
-                @*@Html.TextBoxFor(model => model.Start,htmlAttributes: new { @class = "form-control, datetimepicker" })*@
-                @Html.TextBoxFor(model => model.Start,
-                                                                                                                                htmlAttributes: new { @class = "form-control DTStart" })
-
-                <span asp-validation-for="Start" class="text-danger"></span>
+                @Html.TextBoxFor(model => model.Start, htmlAttributes: new { @class = "form-control DTStart" })<span asp-validation-for="Start" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="dateend">
+                <label asp-for="End" class="control-label"></label>
+                @*<input asp-for="End" class="form-control" id="#form_datetime" />*@
+                @Html.TextBoxFor(model => model.End, htmlAttributes: new { @class = "form-control DTEnd" })<span asp-validation-for="End" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="End" class="control-label"></label>
-                @*<input asp-for="End" class="form-control" id="#form_datetime"/>*@
-                @Html.TextBoxFor(model => model.End,
-                                                                                                                                       htmlAttributes: new { @class = "form-control DTEnd" })
-                <span asp-validation-for="End" class="text-danger"></span>
+                <label class="control-label">How many Days repeat?</label>
+
+                <input asp-for="Days" class="form-control" />
+                <span asp-validation-for="Days" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label class="control-label">How many Weeks repeat?</label>
+
+                <input asp-for="Weeks" class="form-control" />
+                <span asp-validation-for="Weeks" class="text-danger"></span>
+            </div>
+
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -63,25 +76,43 @@
 @section scripts
     {
     <script>
-$(document).ready(function () {
-            $(".DTStart").datetimepicker({
-                format: 'DD-MM-YYYY HH:mm',
-                inline: true,
-                sideBySide: true,
-                toolbarPlacement: 'bottom'
-            });
-
+    $(document).ready(function () {
+        $(".DTStart").datetimepicker({
+            format: 'DD-MM-YYYY HH:mm',
+            inline: true,
+            sideBySide: true,
+            toolbarPlacement: 'bottom'
         });
 
-$(document).ready(function () {
+    });
 
-            //http://eonasdan.github.io/bootstrap-datetimepicker/
+    $(document).ready(function () {
 
-            $(".DTEnd").datetimepicker({
-                format: 'DD-MM-YYYY HH:mm',
-               inline: true,
-                sideBySide: true,
-                toolbarPlacement: 'top'
-      });
-        });</script>
+        //http://eonasdan.github.io/bootstrap-datetimepicker/
+
+        $(".DTEnd").datetimepicker({
+            format: 'DD-MM-YYYY HH:mm',
+            inline: true,
+            sideBySide: true,
+            toolbarPlacement: 'top'
+        });
+    });</script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#chkFullDay").on("click", function () {
+                if (document.getElementById('chkFullDay').checked) {
+
+                    $("#datestart").hide();
+                    $("#dateend").hide();
+                } else {
+
+                    $("#datestart").show();
+                    $("#dateend").show();
+                }
+            });
+        });
+    </script>
+
 }

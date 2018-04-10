@@ -49,9 +49,13 @@ namespace ASPCollegeBooking.Migrations
                     b.Property<string>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("Days");
+
                     b.Property<DateTime>("End");
 
                     b.Property<string>("EventColor");
+
+                    b.Property<bool>("IsFullDay");
 
                     b.Property<string>("ResourceId");
 
@@ -60,6 +64,8 @@ namespace ASPCollegeBooking.Migrations
                     b.Property<DateTime>("Start");
 
                     b.Property<string>("Title");
+
+                    b.Property<int>("Weeks");
 
                     b.HasKey("ID");
 

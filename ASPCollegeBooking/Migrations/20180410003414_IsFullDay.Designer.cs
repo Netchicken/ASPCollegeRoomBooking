@@ -11,14 +11,14 @@ using System;
 namespace ASPCollegeBooking.Migrations
 {
     [DbContext(typeof(BookingContext))]
-    [Migration("20171107065517_init")]
-    partial class init
+    [Migration("20180410003414_IsFullDay")]
+    partial class IsFullDay
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
+                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("ASPCollegeBooking.Models.CalendarDB", b =>
@@ -45,6 +45,32 @@ namespace ASPCollegeBooking.Migrations
                     b.ToTable("CalendarDbs");
                 });
 
+            modelBuilder.Entity("ASPCollegeBooking.Models.Events", b =>
+                {
+                    b.Property<string>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("End");
+
+                    b.Property<string>("EventColor");
+
+                    b.Property<bool>("IsFullDay");
+
+                    b.Property<string>("ResourceId");
+
+                    b.Property<string>("RoomID");
+
+                    b.Property<DateTime>("Start");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("RoomID");
+
+                    b.ToTable("Events");
+                });
+
             modelBuilder.Entity("ASPCollegeBooking.Models.RoomBooking", b =>
                 {
                     b.Property<string>("BookingID")
@@ -66,8 +92,6 @@ namespace ASPCollegeBooking.Migrations
 
                     b.Property<int>("Weeks");
 
-                    b.Property<int>("delete");
-
                     b.HasKey("BookingID");
 
                     b.HasIndex("Rooms");
@@ -80,13 +104,20 @@ namespace ASPCollegeBooking.Migrations
                     b.Property<string>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("EventColor");
 
-                    b.Property<int>("delete");
+                    b.Property<string>("Title");
 
                     b.HasKey("ID");
 
                     b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("ASPCollegeBooking.Models.Events", b =>
+                {
+                    b.HasOne("ASPCollegeBooking.Models.Rooms", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomID");
                 });
 
             modelBuilder.Entity("ASPCollegeBooking.Models.RoomBooking", b =>

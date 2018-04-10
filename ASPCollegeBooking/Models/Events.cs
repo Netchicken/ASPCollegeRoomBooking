@@ -20,7 +20,9 @@ namespace ASPCollegeBooking.Models
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string Title { get; set; }
-
+        public bool IsFullDay { get; set; }
+        public int Days { get; set; }
+        public int Weeks { get; set; }
 
     }
 }

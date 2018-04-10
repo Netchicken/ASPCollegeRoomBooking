@@ -11,8 +11,8 @@ using System;
 namespace ASPCollegeBooking.Migrations
 {
     [DbContext(typeof(BookingContext))]
-    [Migration("20180404003907_RoomClass")]
-    partial class RoomClass
+    [Migration("20180410010434_DaysWeeks")]
+    partial class DaysWeeks
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,9 +50,13 @@ namespace ASPCollegeBooking.Migrations
                     b.Property<string>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("Days");
+
                     b.Property<DateTime>("End");
 
                     b.Property<string>("EventColor");
+
+                    b.Property<bool>("IsFullDay");
 
                     b.Property<string>("ResourceId");
 
@@ -61,6 +65,8 @@ namespace ASPCollegeBooking.Migrations
                     b.Property<DateTime>("Start");
 
                     b.Property<string>("Title");
+
+                    b.Property<int>("Weeks");
 
                     b.HasKey("ID");
 

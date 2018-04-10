@@ -88,11 +88,10 @@ namespace ASPCollegeBooking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ResourceId,EventColor,Start,End,Title,RoomID")] Events events)
+        public async Task<IActionResult> Create([Bind("ID,ResourceId,EventColor,Start,End,Title,RoomID,IsFullDay,Days,Weeks")] Events events)
         {
             if (ModelState.IsValid)
             {
-                // events.Room.ID = events.ResourceId;
                 _context.Add(events);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
