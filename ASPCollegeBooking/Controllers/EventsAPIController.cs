@@ -25,6 +25,50 @@ namespace ASPCollegeBooking.Controllers
         [HttpGet]
         public IEnumerable<Events> GetEvents()
         {
+
+            foreach (var booking in _context.Events)
+            {
+                if (booking.IsFullDay == true)
+                {
+                    //todo create a start and end time for the dates saved
+                    //  booking.Start = booking.Start.Date +date
+
+                }
+
+                if (booking.Days > 0)
+                {
+                    //todo create new bookings for the amount of days - account for weekends
+                    //  booking.Start = booking.Start.Date +date
+
+                    for (int i = 0; i < booking.Days; i++)
+                    {
+                        booking.Start = booking.Start.AddDays(1);
+                        booking.End = booking.End.AddDays(1);
+
+                        //if the booking is a saturday add 2 days to make it a monday
+                        if (booking.Start.DayOfWeek == DayOfWeek.Saturday)
+                        {
+                            booking.Start = booking.Start.AddDays(2);
+                            booking.End = booking.End.AddDays(2);
+                        }
+                        //add the new booking repeat for each day
+                        _context.Events.Add(booking);
+                    }
+
+
+                }
+
+                if (booking.Weeks > 0)
+                {
+                    //todo create new bookings for the amount of weeks 
+
+                }
+
+
+            }
+
+
+
             return _context.Events;
         }
 
