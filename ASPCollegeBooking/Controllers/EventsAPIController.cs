@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ASPCollegeBooking.Data;
 using ASPCollegeBooking.Models;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace ASPCollegeBooking.Controllers
 {
@@ -25,14 +26,26 @@ namespace ASPCollegeBooking.Controllers
         [HttpGet]
         public IEnumerable<Events> GetEvents()
         {
+            DayWeeksAllDayMods();
 
-            foreach (var booking in _context.Events)
+            //   DbSet<Events> FinalEvents = new DbSet<Events>(Allbookings);
+          //              FinalEvents.AddRange(Allbookings);
+            return _context.Events;
+        }
+
+        private void DayWeeksAllDayMods()
+        {
+//need to change to a list instead of a DB set to add in new data
+            var Allbookings = new List<Events>(_context.Events);
+            //temporary list to hold new data and merge at end
+            var newbookings = new List<Events>();
+
+            foreach (var booking in Allbookings)
             {
                 if (booking.IsFullDay == true)
                 {
                     //todo create a start and end time for the dates saved
                     //  booking.Start = booking.Start.Date +date
-
                 }
 
                 if (booking.Days > 0)
@@ -52,24 +65,19 @@ namespace ASPCollegeBooking.Controllers
                             booking.End = booking.End.AddDays(2);
                         }
                         //add the new booking repeat for each day
-                        _context.Events.Add(booking);
+
+                        newbookings.Add(booking);
+                        // _context.Events.Add(newbooking);
                     }
-
-
                 }
 
                 if (booking.Weeks > 0)
                 {
                     //todo create new bookings for the amount of weeks 
-
                 }
-
-
             }
 
-
-
-            return _context.Events;
+            Allbookings.AddRange(newbookings);
         }
 
         // GET: api/EventsApi/5
