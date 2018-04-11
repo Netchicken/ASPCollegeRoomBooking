@@ -26,59 +26,11 @@ namespace ASPCollegeBooking.Controllers
         [HttpGet]
         public IEnumerable<Events> GetEvents()
         {
-            DayWeeksAllDayMods();
 
-            //   DbSet<Events> FinalEvents = new DbSet<Events>(Allbookings);
-          //              FinalEvents.AddRange(Allbookings);
             return _context.Events;
         }
 
-        private void DayWeeksAllDayMods()
-        {
-//need to change to a list instead of a DB set to add in new data
-            var Allbookings = new List<Events>(_context.Events);
-            //temporary list to hold new data and merge at end
-            var newbookings = new List<Events>();
 
-            foreach (var booking in Allbookings)
-            {
-                if (booking.IsFullDay == true)
-                {
-                    //todo create a start and end time for the dates saved
-                    //  booking.Start = booking.Start.Date +date
-                }
-
-                if (booking.Days > 0)
-                {
-                    //todo create new bookings for the amount of days - account for weekends
-                    //  booking.Start = booking.Start.Date +date
-
-                    for (int i = 0; i < booking.Days; i++)
-                    {
-                        booking.Start = booking.Start.AddDays(1);
-                        booking.End = booking.End.AddDays(1);
-
-                        //if the booking is a saturday add 2 days to make it a monday
-                        if (booking.Start.DayOfWeek == DayOfWeek.Saturday)
-                        {
-                            booking.Start = booking.Start.AddDays(2);
-                            booking.End = booking.End.AddDays(2);
-                        }
-                        //add the new booking repeat for each day
-
-                        newbookings.Add(booking);
-                        // _context.Events.Add(newbooking);
-                    }
-                }
-
-                if (booking.Weeks > 0)
-                {
-                    //todo create new bookings for the amount of weeks 
-                }
-            }
-
-            Allbookings.AddRange(newbookings);
-        }
 
         // GET: api/EventsApi/5
         [HttpGet("{id}")]

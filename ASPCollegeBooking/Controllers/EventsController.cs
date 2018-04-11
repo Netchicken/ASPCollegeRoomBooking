@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ASPCollegeBooking.Business;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -92,7 +94,21 @@ namespace ASPCollegeBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(events);
+                //check if there is a fullday or repeating weeks or days
+                if (events.IsFullDay || events.Days > 0 || events.Weeks > 0)
+                {
+                    foreach (var booking in DayWeeksAllDayMods.EventCalc(events))
+                    {
+                        _context.Add(booking);
+                    }
+                }
+                else
+                {
+                    _context.Add(events);
+                }
+
+
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
