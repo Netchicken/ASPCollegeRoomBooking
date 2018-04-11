@@ -13,22 +13,30 @@ namespace ASPCollegeBooking.Business
         {
             //need to change to a list instead of a DB set to add in new data
             var newbookings = new List<Events>();
-            DateTime StartDate = booking.Start;
-            DateTime EndDate = booking.End;
+
             //add the original before modifying it
             newbookings.Add(booking);
 
+            //work out if its full day or not
             if (booking.IsFullDay == true)
             {
-                //todo create a start and end time for the dates saved
-                //  booking.Start = booking.Start.Date +date
+                // create a start and end time for the dates saved
+                DateTime startdate = booking.Start;
+                TimeSpan tsStart = new TimeSpan(9, 0, 0); //9am
+                booking.Start = startdate.Date + tsStart;
+
+                DateTime enddate = booking.End;
+                TimeSpan tsEnd = new TimeSpan(17, 0, 0); //5pm
+                booking.End = enddate.Date + tsEnd;
+
             }
+            //pass the datetime to local datetime
+            DateTime StartDate = booking.Start;
+            DateTime EndDate = booking.End;
 
             if (booking.Days > 0)
             {
                 // create new bookings for the amount of days - account for weekends
-                //make the startdates easy to update
-
 
                 for (int i = 0; i < booking.Days; i++)
                 {
@@ -67,8 +75,6 @@ namespace ASPCollegeBooking.Business
                     newbookings.Add(singleBooking);
                 }
             }
-
-
             return newbookings;
         }
 

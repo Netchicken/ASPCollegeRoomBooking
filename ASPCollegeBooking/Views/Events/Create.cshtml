@@ -4,9 +4,10 @@
         ViewData["Title"] = "Create a New Event";
     }*@
 <h2>Create a New Event</h2>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+<form asp-action="Create" class="form-horizontal">
+    <div class="row">
+        <div class="col-md-4 col-Margins">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <div class="form-group">
@@ -30,14 +31,19 @@
                 @* <input asp-for="ResourceId" class="form-control" />*@
                 <span asp-validation-for="ResourceId" class="text-danger"></span>
             </div>
+        </div>
 
-
-
+        <!-- Add clearfix for only the required viewport
+        <div class="clearfix visible-xs"></div>-->
+        <div class="col-md-4 col-Margins">
 
             <div class="form-group">
                 <label class="control-label">Tick if its for a Full Day</label>
-                @*<label asp-for="IsFullDay" class="control-label"></label>*@
-                <input type="checkbox" asp-for="IsFullDay" class="form-control" id="chkFullDay" />
+
+                <input type="checkbox" data-toggle="collapse" data-target="#isfulldaymessage" asp-for="IsFullDay" class="form-control" id="chkFullDay" />
+
+                <div class="alert alert-info  collapse" id="isfulldaymessage">Just add the date fields. The times will be generated from 9-5pm.</div>
+
                 <span asp-validation-for="IsFullDay" class="text-danger"></span>
             </div>
 
@@ -50,6 +56,12 @@
                 @*<input asp-for="End" class="form-control" id="#form_datetime" />*@
                 @Html.TextBoxFor(model => model.End, htmlAttributes: new { @class = "form-control DTEnd" })<span asp-validation-for="End" class="text-danger"></span>
             </div>
+
+        </div>
+
+        <!-- Add clearfix for only the required viewport
+        <div class="clearfix visible-xs"></div>-->
+        <div class="col-md-4 col-Margins">
             <div class="form-group">
                 <label class="control-label">How many Days repeat?</label>
 
@@ -67,53 +79,54 @@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
-        </form>
+
+        </div>
     </div>
-</div>
+</form>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 @section scripts
     {
     <script>
-    $(document).ready(function () {
-        $(".DTStart").datetimepicker({
-            format: 'DD-MM-YYYY HH:mm',
-            inline: true,
-            sideBySide: true,
-            toolbarPlacement: 'bottom'
-        });
-
-    });
-
-    $(document).ready(function () {
-
-        //http://eonasdan.github.io/bootstrap-datetimepicker/
-
-        $(".DTEnd").datetimepicker({
-            format: 'DD-MM-YYYY HH:mm',
-            inline: true,
-            sideBySide: true,
-            toolbarPlacement: 'top'
-        });
-    });
-    </script>
-
-
-    <script type="text/javascript">
         $(document).ready(function () {
-            $("#chkFullDay").on("click", function () {
-                if (document.getElementById('chkFullDay').checked) {
+            $(".DTStart").datetimepicker({
+                format: 'DD-MM-YYYY HH:mm',
+                inline: true,
+                sideBySide: true,
+                toolbarPlacement: 'bottom'
+            });
 
-                    $("#datestart").hide();
-                    $("#dateend").hide();
-                } else {
+        });
 
-                    $("#datestart").show();
-                    $("#dateend").show();
-                }
+        $(document).ready(function () {
+
+            //http://eonasdan.github.io/bootstrap-datetimepicker/
+
+            $(".DTEnd").datetimepicker({
+                format: 'DD-MM-YYYY HH:mm',
+                inline: true,
+                sideBySide: true,
+                toolbarPlacement: 'top'
             });
         });
     </script>
+
+
+    @*<script type="text/javascript">
+                $(document).ready(function () {
+                    $("#chkFullDay").on("click", function () {
+                        if (document.getElementById('chkFullDay').checked) {
+
+                            $("#isfulldaymessage").show();
+
+                        } else {
+
+                            $("#isfulldaymessage").hide();
+
+                        }
+                    });
+                });
+        </script>*@
 
 }

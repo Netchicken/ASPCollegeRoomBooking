@@ -15,6 +15,7 @@ namespace ASPCollegeBooking.Models
         [Key()]
         public string ID { get; set; }
         public Rooms Room { get; set; }
+
         public string ResourceId { get; set; }
         public string EventColor { get; set; }
         public DateTime Start { get; set; }
