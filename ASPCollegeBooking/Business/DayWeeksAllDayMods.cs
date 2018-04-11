@@ -73,6 +73,8 @@ namespace ASPCollegeBooking.Business
                     LoadNewBookingElements(booking, singleBooking);
 
                     newbookings.Add(singleBooking);
+
+                    //add check here
                 }
             }
             return newbookings;
@@ -88,5 +90,45 @@ namespace ASPCollegeBooking.Business
             singleBooking.Room = booking.Room;
             singleBooking.Title = booking.Title;
         }
+
+
+        /// <summary>
+        ///     Return a list of events that clash
+        ///  </summary>
+        /// <param name="existingbookings">from the DB</param>
+        /// <param name="NewBooking">Just being made</param>
+        private static Dictionary<Events, Events> DoTheDatesOverlap(Events existingbookings, List<Events> NewBooking)
+        {
+
+            //need to change to a list instead of a DB set to add in new data
+            var existingbookingsList = new List<Events>();
+
+            //add the original before modifying it
+            existingbookingsList.Add(existingbookings);
+
+            var BookingClashDic = new Dictionary<Events, Events>();
+
+
+            foreach (var savedbooking in existingbookingsList)
+            {
+
+                foreach (var newbooking in NewBooking)
+                {
+                    if ((newbooking.Start >= savedbooking.Start) && (newbooking.End < savedbooking.End))
+                    {
+                        BookingClashDic.Add(newbooking, savedbooking);
+                    }
+                }
+
+            }
+
+
+
+
+
+            //return dateToCheck >= startDate && dateToCheck < endDate;
+            return BookingClashDic;
+        }
+
     }
 }

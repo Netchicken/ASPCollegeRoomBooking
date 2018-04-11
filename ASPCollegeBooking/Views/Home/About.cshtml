@@ -3,21 +3,16 @@
 }
 <h1>OLD Schedular</h1>
 
-
 <div id="top">
-
     <div class="left">
-
         <div id="theme-system-selector" class="selector">
             Theme System:
 
             <select>
-              <option value="jquery-ui" selected>jQuery UI</option>
+                <option value="jquery-ui" selected>jQuery UI</option>
                 <option value="standard">unthemed</option>
             </select>
         </div>
-
-       
 
         <div data-theme-system="jquery-ui" class="selector">
             Theme Name:
@@ -27,7 +22,7 @@
                 <option value="blitzer">Blitzer</option>
                 <option value="cupertino" selected>Cupertino</option>
                 <option value="dark-hive">Dark Hive</option>
-               <option value="eggplant">Eggplant</option>
+                <option value="eggplant">Eggplant</option>
                 <option value="excite-bike">Excite Bike</option>
                 <option value="flick">Flick</option>
                 <option value="hot-sneaks">Hot Sneaks</option>
@@ -48,77 +43,72 @@
                 <option value="vader">Vader</option>
             </select>
         </div>
-
         <span id="loading" style="display:none">loading theme...</span>
-
     </div>
-
     <div class="right">
-      
+
         <span class="credits" data-credit-id="jquery-ui">
             <a href="http://jqueryui.com/themeroller/" target="_blank">Theme by jQuery UI</a>
         </span>
     </div>
-
     <div class="clear"></div>
 </div>
-
-
 
 <script>
 
     $(function () { // document ready
 
-            initThemeChooser({
+        initThemeChooser({
 
-                init: function(themeSystem) {
+            init: function (themeSystem) {
 
 
-                    $('#calendar').fullCalendar({
-                        themeSystem: themeSystem,
-            now:  Date(),  //'2017-10-07',
-            editable: true, // enable draggable events
-            aspectRatio: 1.8,
-            scrollTime: '08:00', // undo default 6am scrollTime
-            header: {
-                left: 'today prev,next',
-                center: 'title',
-                right: 'timelineDay,timelineThreeDays,agendaWeek,month,listWeek'
-            },
-            defaultView: 'timelineDay',
-            views: {
-                timelineThreeDays: {
-                    type: 'timeline',
-                    duration: { days: 3 }
-                }
-            },
-            resourceLabelText: 'Rooms',
-
-            resources: { // you can also specify a plain string like 'json/resources.json'
-                type: "GET",
-                url: '/api/RoomsAPI',
-                error: function() {
-                    $('#script-warning').show();
-                }
-            },
-
-            events: { // you can also specify a plain string like 'json/events.json'
-                url: '/api/EventsAPI',
-                error: function() {
-                    $('#script-warning').show();
-                }
-            },
-                        businessHours: {
-                            // days of week. an array of zero-based day of week integers (0=Sunday)
-                            dow: [ 1, 2, 3, 4,5 ], // Monday - Thursday
-
-                            start: '10:00', // a start time (10am in this example)
-                            end: '18:00' // an end time (6pm in this example)
+                $('#calendar').fullCalendar({
+                    themeSystem: themeSystem,
+                    now: Date(),  //'2017-10-07',
+                    editable: true, // enable draggable events
+                    aspectRatio: 1.8,
+                    scrollTime: '08:00', // undo default 6am scrollTime
+                    header: {
+                        left: 'today prev,next',
+                        center: 'title',
+                        right: 'timelineDay,timelineThreeDays,agendaWeek,month,listWeek'
+                    },
+                    defaultView: 'timelineDay',
+                    views: {
+                        timelineThreeDays: {
+                            type: 'timeline',
+                            duration: { days: 3 }
                         }
+                    },
+                    eventOverlap: false, //stop dragging events over each other
+                    resourceLabelText: 'Rooms',
+
+                    resources: { // you can also specify a plain string like 'json/resources.json'
+                        type: "GET",
+                        url: '/api/RoomsAPI',
+                        error: function () {
+                            $('#script-warning').show();
+                        }
+                    },
+
+                    events: { // you can also specify a plain string like 'json/events.json'
+                        url: '/api/EventsAPI',
+                        error: function () {
+                            $('#script-warning').show();
+                        }
+                    },
+                    businessHours: {
+                        // days of week. an array of zero-based day of week integers (0=Sunday)
+                        dow: [1, 2, 3, 4, 5], // Monday - Thursday
+
+                        start: '10:00', // a start time (10am in this example)
+                        end: '18:00' // an end time (6pm in this example)
+                    }
                 });
             },
 
-            change: function(themeSystem) {
+            change: function (themeSystem) {
                 $('#calendar').fullCalendar('option', 'themeSystem', themeSystem);
             }
 
@@ -127,8 +117,8 @@
     });
 
 </script>
-
 <style>
+
     body {
         margin: 40px 10px;
         padding: 0;
@@ -141,10 +131,10 @@
         margin: 0 auto;
     }
 
-    #top,
-    #calendar.fc-unthemed {
-        font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-    }
+        #top,
+        #calendar.fc-unthemed {
+            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+        }
 
     #top {
         background: #eee;
@@ -155,21 +145,26 @@
         color: #000;
     }
 
-    #top .selector {
-        display: inline-block;
-        margin-right: 10px;
+        #top .selector {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        #top select {
+            font: inherit; /* mock what Boostrap does, don't compete  */
+        }
+
+    .left {
+        float: left
     }
 
-    #top select {
-        font: inherit; /* mock what Boostrap does, don't compete  */
+    .right {
+        float: right
     }
 
-    .left { float: left }
-    .right { float: right }
-    .clear { clear: both }
-
-
-
+    .clear {
+        clear: both
+    }
 </style>
 <a asp-area="" asp-controller="Events" asp-action="Create">Create an Event</a>
 <div id="calendar"></div>
