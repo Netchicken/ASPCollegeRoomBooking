@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASPCollegeBooking.Data;
 using ASPCollegeBooking.Models;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace ASPCollegeBooking.Controllers
 {
@@ -92,6 +93,7 @@ namespace ASPCollegeBooking.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,ResourceId,EventColor,Start,End,Title,RoomID,IsFullDay,Days,Weeks")] Events events)
         {
+
             if (ModelState.IsValid)
             {
                 //check if there is a fullday or repeating weeks or days
@@ -102,18 +104,36 @@ namespace ASPCollegeBooking.Controllers
                         _context.Add(booking);
                     }
                 }
-                else
+
+                //pass through the event and look for clashes where its the same room after today
+                DayWeeksAllDayMods.DoTheDatesOverlap(_context.Events.Where(e => e.ResourceId == events.ResourceId && e.End > DateTime.Now).ToList(), events);
+
+                //We have a clash
+                if (DayWeeksAllDayMods.WeHaveAClash == true)
                 {
+                    return RedirectToAction("Clash", new { clash = DayWeeksAllDayMods.BookingClashDic });
+
+                }
+                else
+                {//we dont have a clash
                     _context.Add(events);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index)); //open the details 
                 }
 
+                // return View(events); //stay here
 
-
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
-            return View(events);
+            //model is invalid
+            return RedirectToAction(nameof(Index)); //open the details 
         }
+
+        public IActionResult Clash(Dictionary<Events, Events> clash)
+        {
+            ViewData["Clash"] = clash;
+            return View();
+        }
+
 
         // GET: Events/Edit/5
         public async Task<IActionResult> Edit(string id)

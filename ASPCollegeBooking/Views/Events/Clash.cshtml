@@ -1,0 +1,24 @@
+﻿@using System.Collections
+@model Events
+@{
+    ViewData["Title"] = "You have a booking Clash!";
+}
+<h2>You have a booking Clash!</h2>
+
+@{
+    var errordata = ViewData["Clash"] as Dictionary<Events, Events>;
+    foreach (var item in errordata)
+    {
+        <table>
+            <tr>
+                <td>
+                    @Html.Display("Existing " + item.Key.Start + " to " + item.Key.End)
+                </td>
+                <td>
+                    @Html.Display("New Booking " + item.Value.Start + " to " + item.Value.End)
+                </td>
+
+            </tr>
+        </table>
+    }
+}

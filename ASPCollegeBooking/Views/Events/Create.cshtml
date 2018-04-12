@@ -16,15 +16,7 @@
                     <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
                 <label class="control-label">Choose Your Room</label>
-                @{
-                    //  IEnumerable<SelectList>Roomlist = ViewBag.Roomlist;
 
-                    // <select asp-for="ResourceId" asp-items="ViewBag.Roomlist">
-
-                    //asp-items="@((List <SelectListItem>)ViewData["Numbers"]
-
-                    //<select asp-for="ResourceId" class="form-control" asp-items="@((List<SelectListItem>)ViewData[" Roomlist"])"></select>
-                }
                 <select asp-for="ResourceId" asp-items="ViewBag.Roomlist" class="form-control">
                     <option>Please select one</option>
                 </select>
@@ -33,8 +25,8 @@
             </div>
         </div>
 
-        <!-- Add clearfix for only the required viewport
-        <div class="clearfix visible-xs"></div>-->
+        <!-- Add clearfix for only the required viewport-->
+        <div class="clearfix visible-xs"></div>
         <div class="col-md-4 col-Margins">
 
             <div class="form-group">
@@ -59,8 +51,8 @@
 
         </div>
 
-        <!-- Add clearfix for only the required viewport
-        <div class="clearfix visible-xs"></div>-->
+        <!-- Add clearfix for only the required viewport-->
+        <div class="clearfix visible-xs"></div>
         <div class="col-md-4 col-Margins">
             <div class="form-group">
                 <label class="control-label">How many Days repeat?</label>
@@ -74,42 +66,44 @@
                 <input asp-for="Weeks" class="form-control" min="0" value="0" />
                 <span asp-validation-for="Weeks" class="text-danger"></span>
             </div>
-
-
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
-
         </div>
     </div>
 </form>
 <div>
+    <div class="alert alert-info">
+    </div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+
+
 @section scripts
     {
     <script>
-        $(document).ready(function () {
-            $(".DTStart").datetimepicker({
-                format: 'DD-MM-YYYY HH:mm',
-                inline: true,
-                sideBySide: true,
-                toolbarPlacement: 'bottom'
-            });
+                $(document).ready(function () {
+                    $(".DTStart").datetimepicker({
+                        format: 'DD-MM-YYYY HH:mm',
+                        inline: true,
+                        sideBySide: true,
+                        toolbarPlacement: 'bottom'
+                    });
 
-        });
+                });
 
-        $(document).ready(function () {
+                $(document).ready(function () {
 
-            //http://eonasdan.github.io/bootstrap-datetimepicker/
+                    //http://eonasdan.github.io/bootstrap-datetimepicker/
 
-            $(".DTEnd").datetimepicker({
-                format: 'DD-MM-YYYY HH:mm',
-                inline: true,
-                sideBySide: true,
-                toolbarPlacement: 'top'
-            });
-        });
+                    $(".DTEnd").datetimepicker({
+                        format: 'DD-MM-YYYY HH:mm',
+                        inline: true,
+                        sideBySide: true,
+                        toolbarPlacement: 'top'
+                    });
+                });
     </script>
 
 
@@ -128,5 +122,8 @@
                     });
                 });
         </script>*@
+
+
+
 
 }

@@ -8,14 +8,17 @@ namespace ASPCollegeBooking.Business
 {
     public static class DayWeeksAllDayMods
     {
+        public static Dictionary<Events, Events> BookingClashDic = new Dictionary<Events, Events>();
+        public static bool WeHaveAClash = false;
 
         public static IEnumerable<Events> EventCalc(Events booking)
         {
+
             //need to change to a list instead of a DB set to add in new data
-            var newbookings = new List<Events>();
+            var originalbookings = new List<Events>();
 
             //add the original before modifying it
-            newbookings.Add(booking);
+            originalbookings.Add(booking);
 
             //work out if its full day or not
             if (booking.IsFullDay == true)
@@ -50,11 +53,18 @@ namespace ASPCollegeBooking.Business
                         singleBooking.Start = singleBooking.Start.AddDays(2);
                         singleBooking.End = singleBooking.End.AddDays(2);
                     }
-                    //add the new booking repeat for each day
 
-                    LoadNewBookingElements(booking, singleBooking);
+                    DoTheDatesOverlap(originalbookings, singleBooking);
+                    // add the new booking repeat for each day
 
-                    newbookings.Add(singleBooking);
+
+
+                    if (WeHaveAClash == false)
+                    {
+                        LoadNewBookingElements(booking, singleBooking);
+                    }
+
+                    originalbookings.Add(singleBooking);
                 }
             }
 
@@ -62,7 +72,7 @@ namespace ASPCollegeBooking.Business
             {
 
 
-                // create new bookings for the amount of weeks 
+                //  create new bookings for the amount of weeks 
                 for (int i = 0; i < booking.Weeks; i++)
                 {
                     Events singleBooking = new Events();
@@ -70,14 +80,23 @@ namespace ASPCollegeBooking.Business
                     singleBooking.Start = StartDate.AddDays(weeks);
                     singleBooking.End = EndDate.AddDays(weeks);
 
+                    //check booking against database
+
+
+
+                    DoTheDatesOverlap(originalbookings, singleBooking);
+
+                    //show the error message
+
+
                     LoadNewBookingElements(booking, singleBooking);
 
-                    newbookings.Add(singleBooking);
+                    originalbookings.Add(singleBooking);
 
                     //add check here
                 }
             }
-            return newbookings;
+            return originalbookings;
         }
 
         private static void LoadNewBookingElements(Events booking, Events singleBooking)
@@ -95,39 +114,34 @@ namespace ASPCollegeBooking.Business
         /// <summary>
         ///     Return a list of events that clash
         ///  </summary>
-        /// <param name="existingbookings">from the DB</param>
+        /// <param name="ExistingBookings">from the DB</param>
         /// <param name="NewBooking">Just being made</param>
-        private static Dictionary<Events, Events> DoTheDatesOverlap(Events existingbookings, List<Events> NewBooking)
+        public static void DoTheDatesOverlap(List<Events> ExistingBookings, Events NewBooking)
         {
-
-            //need to change to a list instead of a DB set to add in new data
-            var existingbookingsList = new List<Events>();
-
-            //add the original before modifying it
-            existingbookingsList.Add(existingbookings);
-
-            var BookingClashDic = new Dictionary<Events, Events>();
-
-
-            foreach (var savedbooking in existingbookingsList)
+            WeHaveAClash = false;
+            foreach (var ExistingBooking in ExistingBookings)
             {
-
-                foreach (var newbooking in NewBooking)
+                //we have a clash
+                if ((NewBooking.Start >= ExistingBooking.Start) && (NewBooking.Start < ExistingBooking.End) || (NewBooking.End >= ExistingBooking.Start) && (NewBooking.End < ExistingBooking.End) && (NewBooking.ResourceId == ExistingBooking.ResourceId))
                 {
-                    if ((newbooking.Start >= savedbooking.Start) && (newbooking.End < savedbooking.End))
-                    {
-                        BookingClashDic.Add(newbooking, savedbooking);
-                    }
+                    WeHaveAClash = true;
+                    //if (BookingClashDic.ContainsKey(ExistingBooking))
+                    //{
+                    //    NewBooking.Title += " copy";
+                    //}
+                    BookingClashDic.Add(ExistingBooking, NewBooking);
+                }
+                else
+                {
+                    //we don't have a clash
+                    WeHaveAClash = false;
                 }
 
             }
 
 
-
-
-
             //return dateToCheck >= startDate && dateToCheck < endDate;
-            return BookingClashDic;
+
         }
 
     }
