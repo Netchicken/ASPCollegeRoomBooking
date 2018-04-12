@@ -111,8 +111,9 @@ namespace ASPCollegeBooking.Controllers
                 //We have a clash
                 if (DayWeeksAllDayMods.WeHaveAClash == true)
                 {
-                    return RedirectToAction("Clash", new { clash = DayWeeksAllDayMods.BookingClashDic });
-
+                    //  myClashDTO.BookingClashDic = DayWeeksAllDayMods.BookingClashDic;
+                    return RedirectToAction("Clash");
+                    //  return RedirectToAction("Clash", new { clash });
                 }
                 else
                 {//we dont have a clash
@@ -120,18 +121,16 @@ namespace ASPCollegeBooking.Controllers
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index)); //open the details 
                 }
-
-                // return View(events); //stay here
-
             }
             //model is invalid
             return RedirectToAction(nameof(Index)); //open the details 
         }
 
-        public IActionResult Clash(Dictionary<Events, Events> clash)
+        public IActionResult Clash()
         {
-            ViewData["Clash"] = clash;
-            return View();
+            ClashDTO myClashDTO = new ClashDTO();
+            myClashDTO.BookingClashDic = DayWeeksAllDayMods.BookingClashDic;
+            return View(myClashDTO);
         }
 
 

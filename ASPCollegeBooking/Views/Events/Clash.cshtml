@@ -1,24 +1,29 @@
 ﻿@using System.Collections
-@model Events
+@model ClashDTO
 @{
     ViewData["Title"] = "You have a booking Clash!";
 }
 <h2>You have a booking Clash!</h2>
 
-@{
-    var errordata = ViewData["Clash"] as Dictionary<Events, Events>;
-    foreach (var item in errordata)
-    {
-        <table>
-            <tr>
-                <td>
-                    @Html.Display("Existing " + item.Key.Start + " to " + item.Key.End)
-                </td>
-                <td>
-                    @Html.Display("New Booking " + item.Value.Start + " to " + item.Value.End)
-                </td>
+<div class="row">
+    <div class="col-md-6 col-Margins">
 
-            </tr>
-        </table>
-    }
-}
+
+        @foreach (var item in Model.BookingClashDic)
+        {
+            <span class="label label-primary">Room <span class="badge"> @item.Key.ResourceId</span></span>
+            <br />
+            <span class="label label-success">Existing </span>
+            <br />
+            <label class="control-label"><span class="label label-info">@item.Key.Title </span> @item.Key.Start to @item.Key.End</label>
+            <br />
+            <span class="label label-success">New Booking </span>
+            <br />
+            <label class="control-label"><span class="label label-info">@item.Value.Title </span> @item.Value.Start to @item.Value.End</label>
+
+        }
+        <br />
+        <button type="button" class="btn btn-primary" onclick="history.go(-1);return false;">Go Back and fix it</button>
+
+    </div>
+</div>
