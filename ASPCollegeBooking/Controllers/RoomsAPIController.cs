@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ASPCollegeBooking.Data;
+using ASPCollegeBooking.DTO;
 using ASPCollegeBooking.Models;
 
 namespace ASPCollegeBooking.Controllers
@@ -23,9 +24,25 @@ namespace ASPCollegeBooking.Controllers
 
         // GET: api/RoomsAPI
         [HttpGet]
-        public IEnumerable<Rooms> GetRooms()
+        public IEnumerable<RoomsWithIntDTO> GetRooms()
         {
-            return _context.Rooms;
+            //we need to convert the rom ID from a string to an INT. So that when it gets ordered it is done with an int not a string
+            List<Rooms> allRooms = new List<Rooms>();
+            List<RoomsWithIntDTO> allRoomswithInt = new List<RoomsWithIntDTO>();
+            //display ordered by ID
+            allRooms.AddRange(_context.Rooms.OrderBy(r => r.ID).ThenBy(r => r.Title));
+
+            foreach (var room in allRooms)
+            {
+                RoomsWithIntDTO newrooms = new RoomsWithIntDTO();
+                newrooms.ID = Convert.ToInt32(room.ID);
+                newrooms.Title = room.Title;
+                newrooms.EventColor = room.EventColor;
+                allRoomswithInt.Add(newrooms);
+            }
+
+
+            return allRoomswithInt.OrderBy(r => r.ID);
         }
 
         // GET: api/RoomsAPI/5
