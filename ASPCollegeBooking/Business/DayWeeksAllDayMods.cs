@@ -122,7 +122,12 @@ namespace ASPCollegeBooking.Business
             foreach (var ExistingBooking in ExistingBookings)
             {
                 //we have a clash
-                if ((NewBooking.Start >= ExistingBooking.Start) && (NewBooking.Start < ExistingBooking.End) || (NewBooking.End >= ExistingBooking.Start) && (NewBooking.End < ExistingBooking.End) && (NewBooking.ResourceId == ExistingBooking.ResourceId))
+                if ((NewBooking.Start >= ExistingBooking.Start) && (NewBooking.Start < ExistingBooking.End)
+                    ||
+                    (NewBooking.End >= ExistingBooking.Start) && (NewBooking.End < ExistingBooking.End) && (NewBooking.ResourceId == ExistingBooking.ResourceId)
+                    ||
+                                                                                                            (NewBooking.Start <= ExistingBooking.Start) && (NewBooking.End > ExistingBooking.End)
+                    )
                 {
                     WeHaveAClash = true;
                     //if (BookingClashDic.ContainsKey(ExistingBooking))

@@ -6,24 +6,38 @@
 <h2>You have a booking Clash!</h2>
 
 <div class="row">
-    <div class="col-md-6 col-Margins">
+    <div class="col-md-12 col-Margins">
 
 
         @foreach (var item in Model.BookingClashDic)
         {
-            <span class="label label-primary">Room <span class="badge"> @item.Key.ResourceId</span></span>
-            <br />
-            <span class="label label-success">Existing </span>
-            <br />
-            <label class="control-label"><span class="label label-info">@item.Key.Title </span> @item.Key.Start to @item.Key.End</label>
-            <br />
-            <span class="label label-success">New Booking </span>
-            <br />
-            <label class="control-label"><span class="label label-info">@item.Value.Title </span> @item.Value.Start to @item.Value.End</label>
+            <div class="col-md-6">
+                <br />
+                <div class="panel panel-info well well-lg">
+                    <div class="panel-heading">
+                        <span class="label label-primary">Room <span class="badge"> @item.Key.ResourceId</span></span>   <span class="label label-info">
+                            @item.Key.Start.ToLongDateString()
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <span class="label label-success">Existing </span> &nbsp;
+                        <span class="label label-info">
+                            @item.Key.Title
+                        </span> &nbsp;
+
+                        <br />
+
+                        <label class="control-label">@item.Key.Start.ToLongTimeString() to @item.Key.End.ToLongTimeString()</label>
+                        <br />
+                        <span class="label label-success">New Booking </span> &nbsp;
+                        <span class="label label-info">@item.Value.Title </span><br />
+                        <label class="control-label">@item.Key.Start.ToLongTimeString() to @item.Key.End.ToLongTimeString()</label>
+                    </div>
+                </div>
+            </div>
 
         }
-        <br />
-        <button type="button" class="btn btn-primary" onclick="history.go(-1);return false;">Go Back and fix it</button>
-
     </div>
+
+    <button type="button" class="btn btn-primary" onclick="history.go(-1);return false;">Go Back and fix it</button>
 </div>
