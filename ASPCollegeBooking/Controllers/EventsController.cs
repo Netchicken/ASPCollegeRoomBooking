@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASPCollegeBooking.Data;
+using ASPCollegeBooking.DTO;
 using ASPCollegeBooking.Models;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
@@ -29,19 +30,20 @@ namespace ASPCollegeBooking.Controllers
             // var roomID = new SelectList(_context.Rooms.Select(r => new {ID = r.ID}).ToList());
 
 
-            //  List<Rooms> allrooms = new List<Rooms>();
-            Dictionary<string, string> allroomsdic = new Dictionary<string, string>();
+            List<RoomsWithIntDTO> allrooms = new List<RoomsWithIntDTO>();
+
+
 
             foreach (var room in _context.Rooms)
             {
                 //find all the data in the reasource id that matches the room ID. then foreach it adding the room title to the ID
                 //https://stackoverflow.com/questions/37075142/linq-replace-column-value-with-another-value (this is beautiful)
-                _context.Events.Where(e => e.ResourceId.Equals(room.ID)).ToList().ForEach(i => i.ResourceId = i.ResourceId + " " + room.Title);
+                _context.Events.Where(e => e.ResourceId.Equals(room.ID)).OrderBy(r => r.Room.ID).ToList().ForEach(i => i.ResourceId = i.ResourceId + " " + room.Title);
             }
 
 
-
             return View(await _context.Events.ToListAsync());
+
         }
 
         public IActionResult Scheduler()
@@ -82,7 +84,9 @@ namespace ASPCollegeBooking.Controllers
             //       Text = n.Title.ToString()
             //   }).ToList();
 
-            ViewBag.Roomlist = new SelectList(_context.Rooms, "ID", "Title");
+            OrderedRooms or = new OrderedRooms(_context);
+
+            ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
             return View();
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace ASPCollegeBooking.Controllers
 
         // GET: api/RoomsAPI
         [HttpGet]
-        public IEnumerable<RoomsWithIntDTO> GetRooms()
+        public IEnumerable GetRooms()
         {
             //we need to convert the rom ID from a string to an INT. So that when it gets ordered it is done with an int not a string
             List<Rooms> allRooms = new List<Rooms>();
