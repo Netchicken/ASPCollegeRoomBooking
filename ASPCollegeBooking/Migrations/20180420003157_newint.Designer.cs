@@ -11,9 +11,10 @@ using System;
 namespace ASPCollegeBooking.Migrations
 {
     [DbContext(typeof(BookingContext))]
-    partial class BookingContextModelSnapshot : ModelSnapshot
+    [Migration("20180420003157_newint")]
+    partial class newint
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +49,16 @@ namespace ASPCollegeBooking.Migrations
                 {
                     b.Property<string>("ID")
                         .ValueGeneratedOnAdd();
-
+                    b.Property<int>("IdAutoInc")
+                                          .ValueGeneratedOnAdd();
                     b.Property<int>("Days");
-
+                    b.Property<string>("Title");
+                    b.Property<DateTime>("Start");
                     b.Property<DateTime>("End");
 
                     b.Property<string>("EventColor");
 
-                    b.Property<int>("IdInc")
-                        .ValueGeneratedOnAdd();
+
 
                     b.Property<bool>("IsFullDay");
 
@@ -64,9 +66,9 @@ namespace ASPCollegeBooking.Migrations
 
                     b.Property<string>("RoomID");
 
-                    b.Property<DateTime>("Start");
 
-                    b.Property<string>("Title");
+
+
 
                     b.Property<int>("Weeks");
 
@@ -111,8 +113,6 @@ namespace ASPCollegeBooking.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("EventColor");
-
-                    b.Property<bool>("IsBookable");
 
                     b.Property<string>("Title");
 

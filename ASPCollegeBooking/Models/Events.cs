@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Threading.Tasks;
@@ -14,6 +15,10 @@ namespace ASPCollegeBooking.Models
 
         [Key()]
         public string ID { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int IdInc { get; set; }
+
         public Rooms Room { get; set; }
 
         public string ResourceId { get; set; }

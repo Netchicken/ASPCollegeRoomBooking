@@ -30,7 +30,7 @@ namespace ASPCollegeBooking.Controllers
             // var roomID = new SelectList(_context.Rooms.Select(r => new {ID = r.ID}).ToList());
 
 
-            List<RoomsWithIntDTO> allrooms = new List<RoomsWithIntDTO>();
+            //  List<RoomsWithIntDTO> allrooms = new List<RoomsWithIntDTO>();
 
 
 
@@ -38,7 +38,9 @@ namespace ASPCollegeBooking.Controllers
             {
                 //find all the data in the reasource id that matches the room ID. then foreach it adding the room title to the ID
                 //https://stackoverflow.com/questions/37075142/linq-replace-column-value-with-another-value (this is beautiful)
-                _context.Events.Where(e => e.ResourceId.Equals(room.ID)).OrderBy(r => r.Room.ID).ToList().ForEach(i => i.ResourceId = i.ResourceId + " " + room.Title);
+                _context.Events.Where(e => e.ResourceId.Equals(room.ID)).OrderBy(r => r.Room.ID).ToList().ForEach(i => i.ResourceId = i.ResourceId + " - " + room.Title);
+
+                _context.Events.OrderByDescending(e => e.IdInc);
             }
 
 

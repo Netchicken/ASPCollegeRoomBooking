@@ -11,9 +11,10 @@ using System;
 namespace ASPCollegeBooking.Migrations
 {
     [DbContext(typeof(BookingContext))]
-    partial class BookingContextModelSnapshot : ModelSnapshot
+    [Migration("20180420003718_newIDInc")]
+    partial class newIDInc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,8 +112,6 @@ namespace ASPCollegeBooking.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("EventColor");
-
-                    b.Property<bool>("IsBookable");
 
                     b.Property<string>("Title");
 
