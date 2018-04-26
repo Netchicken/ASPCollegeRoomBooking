@@ -52,12 +52,25 @@ namespace ASPCollegeBooking.Controllers
         // POST: Rooms/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        //Guid are messing up the room bookings BUT I can't turnit all to ints, so I generate a new int from the max of the existing number +1
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Title,EventColor,IsBookable")] Rooms rooms)
         {
             if (ModelState.IsValid)
             {
+                List<int> ListRoomID = new List<int>();
+                //foreach (var room in _context.Rooms)
+                //{
+                //    ListRoomID.Add(Convert.ToInt16(room.ID));
+                //}
+                _context.Rooms.ToList().ForEach(r => ListRoomID.Add(Convert.ToInt16(r.ID)));
+
+                //var NewID = _context.Rooms.Select(r => Convert.ToInt16(r.ID.Max())+1).ToString();
+                int NewID = ListRoomID.Max() + 1;
+                rooms.ID = NewID.ToString();
+
                 _context.Add(rooms);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

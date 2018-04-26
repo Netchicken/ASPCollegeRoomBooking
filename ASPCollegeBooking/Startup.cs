@@ -78,6 +78,9 @@ namespace ASPCollegeBooking
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Events}/{action=Scheduler}/{id?}");
+                //routes.MapRoute(
+                //    name: "Create",
+                //    template: "{controller=Events}/{action=Create}/{Start?, End?}");
             });
         }
     }

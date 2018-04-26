@@ -92,6 +92,19 @@ namespace ASPCollegeBooking.Controllers
             return View();
         }
 
+
+        //https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/search?view=aspnetcore-2.1
+        //public IActionResult Create(DateTime Start, DateTime End)
+        //{
+
+        //    OrderedRooms or = new OrderedRooms(_context);
+
+        //    ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
+        //    return View();
+        //}
+
+
+
         // POST: Events/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

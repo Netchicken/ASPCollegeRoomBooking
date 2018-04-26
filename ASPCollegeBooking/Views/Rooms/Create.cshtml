@@ -1,11 +1,8 @@
 ﻿@model ASPCollegeBooking.Models.Rooms
-
 @{
     ViewData["Title"] = "Create";
 }
-
 <h2>Create</h2>
-
 <h4>Rooms</h4>
 <hr />
 <div class="row">
@@ -13,14 +10,19 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
+                <label asp-for="Title" class="control-label">What is the Name of this room</label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EventColor" class="control-label"></label>
+                <label asp-for="EventColor" class="control-label">What color do you want this event?</label>
                 <input asp-for="EventColor" class="form-control" />
                 <span asp-validation-for="EventColor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsBookable" class="control-label">Can you book this room?</label>
+                <input asp-for="IsBookable" class="form-control" />
+                <span asp-validation-for="IsBookable" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -28,8 +30,6 @@
         </form>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
