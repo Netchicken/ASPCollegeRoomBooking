@@ -54,7 +54,7 @@ namespace ASPCollegeBooking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Title,EventColor")] Rooms rooms)
+        public async Task<IActionResult> Create([Bind("ID,Title,EventColor,IsBookable")] Rooms rooms)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace ASPCollegeBooking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ID,Title,EventColor")] Rooms rooms)
+        public async Task<IActionResult> Edit(string id, [Bind("ID,Title,EventColor,IsBookable")] Rooms rooms)
         {
             if (id != rooms.ID)
             {

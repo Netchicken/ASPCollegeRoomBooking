@@ -1,11 +1,8 @@
 ﻿@model ASPCollegeBooking.Models.Rooms
-
 @{
     ViewData["Title"] = "Edit";
 }
-
 <h2>Edit</h2>
-
 <h4>Rooms</h4>
 <hr />
 <div class="row">
@@ -24,13 +21,16 @@
                 <span asp-validation-for="EventColor" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="IsBookable" class="control-label"></label>
+                <input asp-for="IsBookable" class="form-control" />
+                <span asp-validation-for="IsBookable" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-

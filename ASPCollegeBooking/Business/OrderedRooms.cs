@@ -34,11 +34,12 @@ namespace ASPCollegeBooking.Business
                 newrooms.ID = Convert.ToInt32(room.ID);
                 newrooms.Title = room.Title;
                 newrooms.EventColor = room.EventColor;
+                newrooms.IsBookable = room.IsBookable;
                 allRoomswithInt.Add(newrooms);
             }
 
 
-            return allRoomswithInt.OrderBy(r => r.ID);
+            return allRoomswithInt.Where(r => r.IsBookable).OrderBy(r => r.ID);
         }
 
 
