@@ -26,7 +26,7 @@ namespace ASPCollegeBooking.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source = RoomBooking");
+            optionsBuilder.UseSqlite("Data Source = RoomBooking.db");
         }
 
 
