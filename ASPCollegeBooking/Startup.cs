@@ -29,8 +29,11 @@ namespace ASPCollegeBooking
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            //services.AddDbContext<BookingContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("RoomBookingConnection")));
+
             services.AddDbContext<BookingContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("RoomBookingConnection")));
+                options.UseSqlite("Data Source = RoomBooking"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -78,9 +81,7 @@ namespace ASPCollegeBooking
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Events}/{action=Scheduler}/{id?}");
-                //routes.MapRoute(
-                //    name: "Create",
-                //    template: "{controller=Events}/{action=Create}/{Start?, End?}");
+             
             });
         }
     }

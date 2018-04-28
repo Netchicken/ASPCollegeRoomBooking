@@ -1,4 +1,9 @@
-﻿    $(function () { // document ready
+﻿
+<div id="calendar"></div>
+@*<script src="~/js/SchedularCustom.js"></script>*@
+<link href="~/css/SchedularCustom.css" rel="stylesheet" />
+<script>
+    $(function () { // document ready
         initThemeChooser({
             init: function (themeSystem) {
 
@@ -24,62 +29,63 @@
                             revertFunc();
                         } else {
                             alert("Lets Do this!"),
-                            //stupid date formatting
-                            // var formatStart = event.start.format("dd/MM/YYYY"),
-                            //     var dateOut = $(event.start.format("dd/MM/YYYY")).val().split("/"),
-                            //     var StartDateToSend = new Date(dateOut[1] + "/" + dateOut[0] + "/" + dateOut[2]),
+                                //stupid date formatting
+                                // var formatStart = event.start.format("dd/MM/YYYY"),
+                                //     var dateOut = $(event.start.format("dd/MM/YYYY")).val().split("/"),
+                                //     var StartDateToSend = new Date(dateOut[1] + "/" + dateOut[0] + "/" + dateOut[2]),
 
 
-                            $.ajax({
-                                type: "PUT",
-                                url: "api/EventsAPI/" + event.id,
-                                contentType: "application/json",
-                                dataType: 'json',
-                                data: JSON.stringify({
-                                    //End: "2017-12-18T14:23:00",
-                                    //EventColor: "Green",
-                                    //ResourceId: "3",
-                                    //ID: "f12afa3f-ba1a-44fc-9d31-de2773e70c98",
-                                    //Start: "2017-11-16T14:32:00",
-                                    //Title: "Thursday angst"
-                                    End: event.end,
-                                    EventColor: event.EventColor,
-                                    ResourceId: event.resourceId,
-                                    ID: event.id,
-                                    Start: event.start,
-                                    Title: event.title
-                                }),
-                                //    data: JSON.stringify(uploadevents),
+                                $.ajax({
+                                    type: "PUT",
+                                    url: "/api/EventsAPI/" + event.id,
+                                    contentType: "application/json",
+                                    dataType: 'json',
+                                    data: JSON.stringify({
+                                        //End: "2017-12-18T14:23:00",
+                                        //EventColor: "Green",
+                                        //ResourceId: "3",
+                                        //ID: "f12afa3f-ba1a-44fc-9d31-de2773e70c98",
+                                        //Start: "2017-11-16T14:32:00",
+                                        //Title: "Thursday angst"
+                                        End: event.end,
+                                        EventColor: event.EventColor,
+                                        ResourceId: event.resourceId,
+                                        ID: event.id,
+                                        Start: event.start,
+                                        Title: event.title
+                                    }),
+                                    //    data: JSON.stringify(uploadevents),
 
-                                // $(event.start).val,//.format("dd/MM/YYYY HH:MM:SS ")).val(),
-                                //$(event.end).val(),
-                                //    Start: $("18/11/2017 2:23:00 PM"),
-                                //    End: $("18/12/2017 2:23:00 PM"),
-
-
-                                success: function () {
-                                    alert("You Beut!");
-                                },
-                                failure: function (data) {
-                                    alert(data.responseText);
-                                },
-                                error: function (data) {
-                                    alert(data.responseText),
-                                        alert("That Sucks!");
-                                }
-
-                                //        data: {
-                                //           ID: $(event.id).val(),
-                                //            ResourceId: $(event.resourceId).val(),
-                                //            EventColor: $("").val(),
-                                //            //17/11/2017 1:58:00 PM
-                                //            Start: $(event.start.format("dd/MM/YYYY HH:MM:SS ")).val(),
-                                //            End: $(event.end).val(),
-                                //            Title: $("").val()
+                                    // $(event.start).val,//.format("dd/MM/YYYY HH:MM:SS ")).val(),
+                                    //$(event.end).val(),
+                                    //    Start: $("18/11/2017 2:23:00 PM"),
+                                    //    End: $("18/12/2017 2:23:00 PM"),
 
 
-                                //}
-                            });
+                                    success: function () {
+                                        alert("You Beut!");
+                                    },
+                                    failure: function (data) {
+                                        alert(data.responseText);
+                                    },
+                                    error: function (data) {
+                                        alert(data.responseText),
+                                            alert("That Sucks! It didn't work");
+                                        revertFunc();
+                                    }
+
+                                    //        data: {
+                                    //           ID: $(event.id).val(),
+                                    //            ResourceId: $(event.resourceId).val(),
+                                    //            EventColor: $("").val(),
+                                    //            //17/11/2017 1:58:00 PM
+                                    //            Start: $(event.start.format("dd/MM/YYYY HH:MM:SS ")).val(),
+                                    //            End: $(event.end).val(),
+                                    //            Title: $("").val()
+
+
+                                    //}
+                                });
 
                         };
 
@@ -125,7 +131,7 @@
                         error: function () {
                             $('#script-warning').show();
                         }
-                       // eventOverlap: false // will cause the event to take up entire resource height
+                        // eventOverlap: false // will cause the event to take up entire resource height
                         // eventOverlap: function (stillEvent, movingEvent) {
                         //    return stillEvent.allDay && movingEvent.allDay;
                         //  }
@@ -167,5 +173,4 @@
         });
 
     });
-
-
+</script>

@@ -34,14 +34,14 @@ namespace ASPCollegeBooking.Controllers
 
         // GET: api/EventsApi/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetEvents([FromRoute] string id)
+        public async Task<IActionResult> GetEvents([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var events = await _context.Events.SingleOrDefaultAsync(m => m.ID == id);
+            var events = await _context.Events.SingleOrDefaultAsync(m => m.Id == id);
 
             if (events == null)
             {
@@ -53,14 +53,14 @@ namespace ASPCollegeBooking.Controllers
 
         // PUT: api/EventsApi/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEvents([FromRoute] string id, [FromBody] Events events)
+        public async Task<IActionResult> PutEvents([FromRoute] int id, [FromBody] Events events)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != events.ID)
+            if (id != events.Id)
             {
                 return BadRequest();
             }
@@ -73,14 +73,14 @@ namespace ASPCollegeBooking.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EventsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                //if (!EventsExists(id))
+                //{
+                //    return NotFound();
+                //}
+                //else
+                //{
+                //    throw;
+                //}
             }
 
             return NoContent();
@@ -98,19 +98,19 @@ namespace ASPCollegeBooking.Controllers
             _context.Events.Add(events);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEvents", new { id = events.ID }, events);
+            return CreatedAtAction("GetEvents", new { id = events.Id }, events);
         }
 
         // DELETE: api/EventsApi/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEvents([FromRoute] string id)
+        public async Task<IActionResult> DeleteEvents([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var events = await _context.Events.SingleOrDefaultAsync(m => m.ID == id);
+            var events = await _context.Events.SingleOrDefaultAsync(m => m.Id == id);
             if (events == null)
             {
                 return NotFound();
@@ -122,9 +122,9 @@ namespace ASPCollegeBooking.Controllers
             return Ok(events);
         }
 
-        private bool EventsExists(string id)
+        private bool EventsExists(int id)
         {
-            return _context.Events.Any(e => e.ID == id);
+            return _context.Events.Any(e => e.Id == id);
         }
     }
 }

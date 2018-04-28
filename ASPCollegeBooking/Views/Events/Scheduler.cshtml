@@ -2,6 +2,8 @@
     ViewData["Title"] = "Room Booking";
     @*<h1>Room Booking </h1>*@
 }
-<div id="calendar"></div>
-<script src="~/js/SchedularCustom.js"></script>
-<link href="~/css/SchedularCustom.css" rel="stylesheet" />
+@*<div id="calendar"></div>
+    <script src="~/js/SchedularCustom.js"></script>
+    <link href="~/css/SchedularCustom.css" rel="stylesheet" />*@
+
+@await Html.PartialAsync("~/Views/Shared/_calendar.cshtml")

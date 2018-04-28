@@ -40,11 +40,11 @@ namespace ASPCollegeBooking.Controllers
                 //https://stackoverflow.com/questions/37075142/linq-replace-column-value-with-another-value (this is beautiful)
                 _context.Events.Where(e => e.ResourceId.Equals(room.ID)).OrderBy(r => r.Room.ID).ToList().ForEach(i => i.ResourceId = i.ResourceId + " - " + room.Title);
 
-                _context.Events.OrderByDescending(e => e.IdInc);
+                // _context.Events.OrderByDescending(e => e.Id);
             }
 
 
-            return View(await _context.Events.ToListAsync());
+            return View(await _context.Events.OrderByDescending(e => e.Id).ToListAsync());
 
         }
 
@@ -55,15 +55,15 @@ namespace ASPCollegeBooking.Controllers
         }
 
         // GET: Events/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
 
             var events = await _context.Events
-                .SingleOrDefaultAsync(m => m.ID == id);
+                .SingleOrDefaultAsync(m => m.Id == id);
             if (events == null)
             {
                 return NotFound();
@@ -154,14 +154,14 @@ namespace ASPCollegeBooking.Controllers
 
 
         // GET: Events/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
 
-            var events = await _context.Events.SingleOrDefaultAsync(m => m.ID == id);
+            var events = await _context.Events.SingleOrDefaultAsync(m => m.Id == id);
             if (events == null)
             {
                 return NotFound();
@@ -173,9 +173,9 @@ namespace ASPCollegeBooking.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ID,ResourceId,EventColor,Start,End,Title")] Events events)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,ResourceId,EventColor,Start,End,Title")] Events events)
         {
-            if (id != events.ID)
+            if (id != events.Id)
             {
                 return NotFound();
             }
@@ -189,7 +189,7 @@ namespace ASPCollegeBooking.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventsExists(events.ID))
+                    if (!EventsExists(events.Id))
                     {
                         return NotFound();
                     }
@@ -204,15 +204,15 @@ namespace ASPCollegeBooking.Controllers
         }
 
         // GET: Events/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
 
             var events = await _context.Events
-                .SingleOrDefaultAsync(m => m.ID == id);
+                .SingleOrDefaultAsync(m => m.Id == id);
             if (events == null)
             {
                 return NotFound();
@@ -224,17 +224,17 @@ namespace ASPCollegeBooking.Controllers
         // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var events = await _context.Events.SingleOrDefaultAsync(m => m.ID == id);
+            var events = await _context.Events.SingleOrDefaultAsync(m => m.Id == id);
             _context.Events.Remove(events);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EventsExists(string id)
+        private bool EventsExists(int id)
         {
-            return _context.Events.Any(e => e.ID == id);
+            return _context.Events.Any(e => e.Id == id);
         }
     }
 }

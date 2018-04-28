@@ -13,14 +13,9 @@ namespace ASPCollegeBooking.Models
 
         // { id: '1', resourceId: 'b', start: '2017-10-07T02:00:00', end: '2017-10-07T07:00:00', title: 'event 1' },
 
-        [Key()]
-        public string ID { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int IdInc { get; set; }
-
+        [Key]
+        public int Id { get; set; }
         public Rooms Room { get; set; }
-
         public string ResourceId { get; set; }
         public string EventColor { get; set; }
         public DateTime Start { get; set; }

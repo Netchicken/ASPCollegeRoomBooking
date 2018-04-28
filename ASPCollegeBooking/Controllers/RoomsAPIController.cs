@@ -50,7 +50,7 @@ namespace ASPCollegeBooking.Controllers
 
         // GET: api/RoomsAPI/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetRooms([FromRoute] string id)
+        public async Task<IActionResult> GetRooms([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -69,7 +69,7 @@ namespace ASPCollegeBooking.Controllers
 
         // PUT: api/RoomsAPI/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRooms([FromRoute] string id, [FromBody] Rooms rooms)
+        public async Task<IActionResult> PutRooms([FromRoute] int id, [FromBody] Rooms rooms)
         {
             if (!ModelState.IsValid)
             {
@@ -89,14 +89,14 @@ namespace ASPCollegeBooking.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RoomsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                //if (!RoomsExists(id))
+                //{
+                //    return NotFound();
+                //}
+                //else
+                //{
+                //    throw;
+                //}
             }
 
             return NoContent();
@@ -119,7 +119,7 @@ namespace ASPCollegeBooking.Controllers
 
         // DELETE: api/RoomsAPI/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRooms([FromRoute] string id)
+        public async Task<IActionResult> DeleteRooms([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -138,7 +138,7 @@ namespace ASPCollegeBooking.Controllers
             return Ok(rooms);
         }
 
-        private bool RoomsExists(string id)
+        private bool RoomsExists(int id)
         {
             return _context.Rooms.Any(e => e.ID == id);
         }

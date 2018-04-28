@@ -30,7 +30,6 @@
                 <span asp-validation-for="IsFullDay" class="text-danger"></span>
             </div>
 
-
             <div class="form-group" id="datestart">
                 <label asp-for="Start" class="control-label"></label>
                 @Html.TextBoxFor(model => model.Start, htmlAttributes: new { @class = "form-control DTStart" })
@@ -38,18 +37,12 @@
                 <span asp-validation-for="Start" class="text-danger"></span>
             </div>
 
-
             <div class="form-group" id="dateend">
                 <label asp-for="End" class="control-label"></label>
                 @Html.TextBoxFor(model => model.End, htmlAttributes: new { @class = "form-control DTEnd" })
 
                 <span asp-validation-for="End" class="text-danger"></span>
             </div>
-
-
-
-
-
         </div>
 
         <!-- Add clearfix for only the required viewport-->
@@ -104,26 +97,27 @@
     </div>
 </form>
 <div>
-    @*<div class="alert alert-info img-responsive">
-            <img src="~/images/upstairs.JPG" />
-            <img src="~/images/upstairs.JPG" />
-        </div>*@
     <a asp-action="Index">Back to List</a>
 </div>
 
 
 <div class="collapse alert alert-info" id="isRoomDiagrammessage">
-
-    @await Html.PartialAsync("~/Views/Shared/carousel.cshtml")
-
-
+    @await Html.PartialAsync("~/Views/Shared/_carousel.cshtml")
 </div>
 
-<div id="calendar"></div>
-<script src="~/js/SchedularCustom.js"></script>
-<link href="~/css/SchedularCustom.css" rel="stylesheet" />
+<div id="calendarrefresh">
+    @await Html.PartialAsync("~/Views/Shared/_calendar.cshtml")
+</div>
 
 
+@*<div id="calendar"></div>
+
+    <script src="~/js/SchedularCustom.js"></script>
+    <link href="~/css/SchedularCustom.css" rel="stylesheet" />*@
+
+
+<script src="~/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<link href="~/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker-standalone.css" rel="stylesheet" />
 @section scripts
     {
     <script>
@@ -136,8 +130,7 @@
                 toolbarPlacement: 'bottom',
                 showClose: true
             });
-
-        });
+            });
 
         $(document).ready(function () {
 
@@ -158,8 +151,23 @@
         $(document).ready(function () {
         document.getElementById("Title").focus();
     });
-    </script>
+      @*  https://stackoverflow.com/questions/11122268/updating-partial-view-with-jquery-in-asp-net-mvc-c-sharp *@
 
+
+
+    </script>
+    <script type="text/javascript">
+    $(function(){
+
+    $('#DTStart').change(function () {
+alert( "function running." );
+    $("#calendarrefresh").load(' @await Html.PartialAsync("~/Views/Shared/_calendar.cshtml")');
+
+    @*('@Url.Action("Skits","KitSection")' + '?id=' + id+ '&status=' + status)*@
+            });
+        alert( "Load was performed." );
+        });
+    </script>
 
     @*
         <script type="text/javascript">

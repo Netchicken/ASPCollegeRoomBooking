@@ -26,12 +26,12 @@ namespace ASPCollegeBooking.Controllers
         }
 
         // GET: Rooms/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
 
             var rooms = await _context.Rooms
                 .SingleOrDefaultAsync(m => m.ID == id);
@@ -60,16 +60,16 @@ namespace ASPCollegeBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-                List<int> ListRoomID = new List<int>();
+                //  List<int> ListRoomID = new List<int>();
                 //foreach (var room in _context.Rooms)
                 //{
                 //    ListRoomID.Add(Convert.ToInt16(room.ID));
                 //}
-                _context.Rooms.ToList().ForEach(r => ListRoomID.Add(Convert.ToInt16(r.ID)));
+                //  _context.Rooms.ToList().ForEach(r => ListRoomID.Add(Convert.ToInt16(r.ID)));
 
                 //var NewID = _context.Rooms.Select(r => Convert.ToInt16(r.ID.Max())+1).ToString();
-                int NewID = ListRoomID.Max() + 1;
-                rooms.ID = NewID.ToString();
+
+                //  rooms.ID = ListRoomID.Max() + 1; 
 
                 _context.Add(rooms);
                 await _context.SaveChangesAsync();
@@ -79,12 +79,12 @@ namespace ASPCollegeBooking.Controllers
         }
 
         // GET: Rooms/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
 
             var rooms = await _context.Rooms.SingleOrDefaultAsync(m => m.ID == id);
             if (rooms == null)
@@ -99,7 +99,7 @@ namespace ASPCollegeBooking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ID,Title,EventColor,IsBookable")] Rooms rooms)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,EventColor,IsBookable")] Rooms rooms)
         {
             if (id != rooms.ID)
             {
@@ -115,14 +115,14 @@ namespace ASPCollegeBooking.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RoomsExists(rooms.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    //if (!RoomsExists(rooms.ID))
+                    //{
+                    //    return NotFound();
+                    //}
+                    //else
+                    //{
+                    //    throw;
+                    //}
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -130,12 +130,12 @@ namespace ASPCollegeBooking.Controllers
         }
 
         // GET: Rooms/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
 
             var rooms = await _context.Rooms
                 .SingleOrDefaultAsync(m => m.ID == id);
@@ -150,7 +150,7 @@ namespace ASPCollegeBooking.Controllers
         // POST: Rooms/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var rooms = await _context.Rooms.SingleOrDefaultAsync(m => m.ID == id);
             _context.Rooms.Remove(rooms);
@@ -158,7 +158,7 @@ namespace ASPCollegeBooking.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RoomsExists(string id)
+        private bool RoomsExists(int id)
         {
             return _context.Rooms.Any(e => e.ID == id);
         }

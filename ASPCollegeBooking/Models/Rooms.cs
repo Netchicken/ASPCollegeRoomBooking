@@ -9,8 +9,8 @@ namespace ASPCollegeBooking.Models
 {
     public class Rooms
     {  //some technical debt happening here, its not a guid, just an counter pretending to be a guid, should be an int.
-        [Key()]
-        public string ID { get; set; }
+        [Key]
+        public int ID { get; set; }
         public string Title { get; set; }
         public string EventColor { get; set; }
         public bool IsBookable { get; set; }
