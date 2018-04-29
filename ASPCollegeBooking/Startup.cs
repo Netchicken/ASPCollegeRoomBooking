@@ -29,11 +29,28 @@ namespace ASPCollegeBooking
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddDbContext<BookingContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("RoomBookingConnection")));
+            //     services.AddDbContext<BookingContext>(options =>
+            //         options.UseSqlServer(Configuration.GetConnectionString("RoomBookingConnection")));
 
-            services.AddDbContext<BookingContext>(options =>
-                options.UseSqlite("Data Source = RoomBooking.db"));
+            // Use SQL Database if in Azure, otherwise, use SQLite
+            //----------------------
+            //if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            //    services.AddDbContext<BookingContext>(options =>
+            //            options.UseSqlServer(Configuration.GetConnectionString("RoomBookingConnection")));
+            //else
+            //    services.AddDbContext<BookingContext>(options =>
+            //            options.UseSqlite("Data Source=RoomBooking.db"));
+            //end------------------------------
+
+            ////If this code detects that it is running in production (which indicates the Azure environment), then it uses the connection string you configured to connect to the SQL Database.
+
+            // The Database.Migrate() call helps you when it is run in Azure, because it automatically creates the databases that your .NET Core app needs, based on its migration configuration. 
+
+            // Automatically perform database migration
+            //  services.BuildServiceProvider().GetService<BookingContext>().Database.Migrate();
+
+
+            services.AddDbContext<BookingContext>(options => options.UseSqlite("Data Source = RoomBooking.db"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

@@ -24,10 +24,10 @@ namespace ASPCollegeBooking.Data
         // public DbSet<CalendarDB> CalendarDbs { get; set; }
         public DbSet<Events> Events { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Data Source = RoomBooking.db");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlite("Data Source = RoomBooking.db");
+        //}
 
 
 
