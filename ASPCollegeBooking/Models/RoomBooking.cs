@@ -22,6 +22,7 @@ namespace ASPCollegeBooking.Models
         [ForeignKey("Rooms")]
         public Rooms Room { get; set; }
 
-       
+
+
     }
 }

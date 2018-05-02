@@ -26,11 +26,14 @@ namespace ASPCollegeBooking
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //  services.AddDbContext<ApplicationDbContext>(options =>
+            //     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            //     services.AddDbContext<BookingContext>(options =>
-            //         options.UseSqlServer(Configuration.GetConnectionString("RoomBookingConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = admin.db"));
+
+
+            //services.AddDbContext<BookingContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("RoomBookingConnection")));
 
             // Use SQL Database if in Azure, otherwise, use SQLite
             //----------------------
@@ -60,7 +63,7 @@ namespace ASPCollegeBooking
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 4;
+                options.Password.RequiredLength = 2;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;

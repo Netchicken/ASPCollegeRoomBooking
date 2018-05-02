@@ -26,14 +26,6 @@ namespace ASPCollegeBooking.Controllers
         // GET: Events
         public async Task<IActionResult> Index()
         {
-
-            // var roomID = new SelectList(_context.Rooms.Select(r => new {ID = r.ID}).ToList());
-
-
-            //  List<RoomsWithIntDTO> allrooms = new List<RoomsWithIntDTO>();
-
-
-
             foreach (var room in _context.Rooms)
             {
                 //find all the data in the reasource id that matches the room ID. then foreach it adding the room title to the ID
@@ -76,16 +68,6 @@ namespace ASPCollegeBooking.Controllers
         public IActionResult Create()
         {
 
-            // ViewData["Roomlist"] = new SelectList(_context.Rooms, "ID", "Title").ToList();
-
-            //https://www.learnrazorpages.com/razor-pages/tag-helpers/select-tag-helper
-            //ViewData["Roomlist"] = _context.Rooms
-            //   .Select(n => new SelectListItem
-            //   {
-            //       Value = n.ID.ToString(),
-            //       Text = n.Title.ToString()
-            //   }).ToList();
-
             OrderedRooms or = new OrderedRooms(_context);
 
             ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
@@ -112,7 +94,7 @@ namespace ASPCollegeBooking.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,ResourceId,EventColor,Start,End,Title,RoomID,IsFullDay,Days,Weeks")] Events events)
         {
-
+            //is the start date older than the end date?
             if (ModelState.IsValid)
             {
                 //check if there is a fullday or repeating weeks or days
@@ -141,8 +123,17 @@ namespace ASPCollegeBooking.Controllers
                     return RedirectToAction(nameof(Index)); //open the details 
                 }
             }
+            else
+            {
+                //if model is not valid return view - have to refresh context
+                OrderedRooms or = new OrderedRooms(_context);
+                ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
+
+                return View();
+               
+            }
             //model is invalid
-            return RedirectToAction(nameof(Index)); //open the details 
+            return RedirectToAction("Create");
         }
 
         public IActionResult Clash()
@@ -180,7 +171,7 @@ namespace ASPCollegeBooking.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && events.End > events.Start)
             {
                 try
                 {
@@ -198,9 +189,9 @@ namespace ASPCollegeBooking.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("About", "Home");
+                return RedirectToAction("index", "Events");
             }
-            return RedirectToAction("About", "Home");
+            return RedirectToAction("index", "Events");
         }
 
         // GET: Events/Delete/5
