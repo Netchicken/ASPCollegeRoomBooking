@@ -1,11 +1,6 @@
 ﻿    $(function () { // document ready
-        initThemeChooser({
-            init: function (themeSystem) {
-
-
-                $('#calendar').fullCalendar({
-                    themeSystem: themeSystem,
-                    now:  Date(), //'2017-10-07',
+     $('#calendar').fullCalendar({
+             now:  Date(), //'2017-10-07',
                     editable: true, // enable draggable events
 
                     //This registers the Drag and drop
@@ -23,7 +18,7 @@
                             alert("Goodbye then");
                             revertFunc();
                         } else {
-                            alert("Lets Do this!"),
+                          //  alert("Lets Do this!"),
                             //stupid date formatting
                             // var formatStart = event.start.format("dd/MM/YYYY"),
                             //     var dateOut = $(event.start.format("dd/MM/YYYY")).val().split("/"),
@@ -85,8 +80,6 @@
 
 
                     },
-
-
                     aspectRatio: 1.8,
                     scrollTime: '08:00', // undo default 6am scrollTime
                     header: {
@@ -153,19 +146,10 @@
                     businessHours: {
                         // days of week. an array of zero-based day of week integers (0=Sunday)
                         dow: [1, 2, 3, 4, 5], // Monday - Fri
-
                         start: '8:00', // a start time (8am in this example)
                         end: '18:00' // an end time (6pm in this example)
                     }
                 });
-            },
-
-            change: function (themeSystem) {
-                $('#calendar').fullCalendar('option', 'themeSystem', themeSystem);
-            }
-
-        });
-
-    });
+            });
 
 

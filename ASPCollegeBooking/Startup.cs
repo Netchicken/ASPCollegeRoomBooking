@@ -82,7 +82,6 @@ namespace ASPCollegeBooking
         {
             if (env.IsDevelopment())
             {
-                app.UseStaticFiles(); //added this to run js
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
@@ -92,8 +91,7 @@ namespace ASPCollegeBooking
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
-
+            app.UseStaticFiles(); //added this to run js
             app.UseAuthentication();
 
             app.UseMvc(routes =>

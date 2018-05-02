@@ -130,10 +130,10 @@ namespace ASPCollegeBooking.Controllers
                 ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
 
                 return View();
-               
+
             }
             //model is invalid
-            return RedirectToAction("Create");
+            //  return RedirectToAction("Create");
         }
 
         public IActionResult Clash()

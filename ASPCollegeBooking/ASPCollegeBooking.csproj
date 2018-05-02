@@ -12,6 +12,10 @@
     <Compile Remove="Migrations\20180428033029_NewSetup.Designer.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Properties\PublishProfiles\RoomBookingAtVision - Web Deploy.pubxml" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
