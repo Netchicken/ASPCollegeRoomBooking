@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ASPCollegeBooking.Models
 {
-    public class ValidateEndDate : ValidationAttribute
+    public class ValidateRoom : ValidationAttribute
     {
 
         //https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-2.0
@@ -16,11 +16,11 @@ namespace ASPCollegeBooking.Models
         {
             var model = validationContext.ObjectInstance as Events;
 
-            if (model == null)
-                throw new ArgumentException("Error");
-
-            if (model.Start >= model.End)
+            if (model.ResourceId.Contains("Please"))
                 return new ValidationResult(GetErrorMessage(validationContext));
+
+            //if (model.Start > model.End)
+            //    return new ValidationResult(GetErrorMessage(validationContext));
 
             return ValidationResult.Success;
         }

@@ -145,7 +145,7 @@
 
                     businessHours: {
                         // days of week. an array of zero-based day of week integers (0=Sunday)
-                        dow: [1, 2, 3, 4, 5], // Monday - Fri
+                        dow: [0,1, 2, 3, 4, 5,6], // Monday - Fri
                         start: '8:00', // a start time (8am in this example)
                         end: '18:00' // an end time (6pm in this example)
                     }

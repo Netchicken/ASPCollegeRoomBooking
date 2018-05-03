@@ -111,7 +111,7 @@
     @await Html.PartialAsync("~/Views/Shared/_carousel.cshtml")
 </div>
 
-<div id="calendarrefresh">
+<div class="schedular" id="calendarrefresh">
     @await Html.PartialAsync("~/Views/Shared/_calendar.cshtml")
 </div>
 
@@ -122,11 +122,13 @@
     <link href="~/css/SchedularCustom.css" rel="stylesheet" />*@
 
 
-<script src="~/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+
 <link href="~/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker-standalone.css" rel="stylesheet" />
 @section scripts
     {
+    <script src="~/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <script>
+
 
         $(document).ready(function() {
             $(".DTStart").datetimepicker({

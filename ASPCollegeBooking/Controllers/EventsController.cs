@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using ASPCollegeBooking.Business;
@@ -17,6 +18,7 @@ namespace ASPCollegeBooking.Controllers
     public class EventsController : Controller
     {
         private readonly BookingContext _context;
+        CultureInfo MyCultureInfo = new CultureInfo("en-NZ");
 
         public EventsController(BookingContext context)
         {

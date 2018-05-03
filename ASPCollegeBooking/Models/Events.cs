@@ -15,6 +15,8 @@ namespace ASPCollegeBooking.Models
 
         [Key] public int Id { get; set; }
         public Rooms Room { get; set; }
+
+        [ValidateRoom(ErrorMessage = "You need a room")]
         [Required] public string ResourceId { get; set; }
         public string EventColor { get; set; }
 
