@@ -130,17 +130,18 @@
     <script>
 
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $(".DTStart").datetimepicker({
                 format: 'DD-MM-YYYY HH:mm',
                 inline: true,
                 sideBySide: true,
                 toolbarPlacement: 'bottom',
                 showClose: true
+
             });
         });
 
-        $(document).ready(function() {
+        $(document).ready(function () {
 
             //http://eonasdan.github.io/bootstrap-datetimepicker/
 
@@ -154,12 +155,28 @@
 
             });
         });
+        //holy crap it works
+            $(function () {
+                $('.DTStart').datetimepicker();
+                $('.DTEnd').datetimepicker({
+                useCurrent: false //Important! See issue #1075
+                    });
+                $(".DTStart").on("dp.change", function (e) {
+                    $('.DTEnd').data("DateTimePicker").minDate(e.date);
+            });
+                $("#DTEnd").on("dp.change", function (e) {
+                    $('.DTEnd').data("DateTimePicker").maxDate(e.date);
+            });
+                });
 
-        @*     Must run this last so the focus returns to the Title *@
-        $(document).ready(function() {
-            document.getElementById("Title").focus();
-        });
-        @*  https://stackoverflow.com/questions/11122268/updating-partial-view-with-jquery-in-asp-net-mvc-c-sharp *@
+
+
+
+    @*     Must run this last so the focus returns to the Title *@
+    $(document).ready(function() {
+    document.getElementById("Title").focus();
+    });
+    @*  https://stackoverflow.com/questions/11122268/updating-partial-view-with-jquery-in-asp-net-mvc-c-sharp *@
 
     </script>
     <script type="text/javascript">

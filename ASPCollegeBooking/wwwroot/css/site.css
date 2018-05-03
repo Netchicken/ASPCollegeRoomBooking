@@ -22,7 +22,7 @@
     padding-left: 10px;
     padding-right: 15px;
     padding-bottom: 15px;
-    box-shadow: 3px 3px;
+    box-shadow: 3px 3px grey;
 }
 
 .schedular {
@@ -34,7 +34,7 @@
     padding-left: 10px;
     padding-right: 15px;
     padding-bottom: 15px;
-    box-shadow: 3px 3px;
+    box-shadow: 5px 5px grey;
     margin-left: 50px;
     margin-right: 10px;
 }

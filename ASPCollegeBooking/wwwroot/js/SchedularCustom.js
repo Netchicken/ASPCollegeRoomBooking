@@ -1,6 +1,6 @@
 ﻿    $(function () { // document ready
      $('#calendar').fullCalendar({
-             now:  Date(), //'2017-10-07',
+             now:  Date.now(), //'2017-10-07',
                     editable: true, // enable draggable events
 
                     //This registers the Drag and drop
