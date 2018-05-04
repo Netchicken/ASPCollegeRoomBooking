@@ -5,7 +5,7 @@
 
     https://www.w3schools.com/bootstrap/bootstrap_forms_inputs.asp
     }*@
-<h2>Create a New Event</h2>
+<h2>Create a New Event  -   @ViewBag.TodayDate     </h2>
 <form asp-action="Create" class="form-horizontal">
     <div class="row">
         <div class="col-md-4 col-Margins">
@@ -49,11 +49,11 @@
 
 
             </div>
-        </div>
+            <!--    </div>
 
-        <!-- Add clearfix for only the required viewport-->
-        <div class="clearfix visible-xs"></div>
-        <div class="col-md-4 col-Margins">
+            Add clearfix for only the required viewport
+                   <div class="clearfix visible-xs"></div>
+                   <div class="col-md-4 col-Margins">-->
 
             <div class="form-group">
 
@@ -63,15 +63,13 @@
                 </select>
                 <span asp-validation-for="ResourceId" class="text-danger"></span>
 
-                <label class="control-label">Show the room diagrams (at the bottom of the page)</label>
 
-                <input type="checkbox" data-toggle="collapse" data-target="#isRoomDiagrammessage" class="form-control" id="chkRoomDiagrammessage" />
             </div>
-        </div>
+            <!--  </div>
 
-        <!-- Add clearfix for only the required viewport-->
-        <div class="clearfix visible-xs"></div>
-        <div class="col-md-4 col-Margins">
+            Add clearfix for only the required viewport
+               <div class="clearfix visible-xs"></div>
+                    <div class="col-md-4 col-Margins">-->
             <div class="form-group">
 
                 <label class="control-label">Do you want it to repeat daily or weekly?</label>
@@ -100,22 +98,32 @@
                 <input type="submit" value="Create your booking" class="btn btn-primary" />
             </div>
         </div>
-    </div>
+
 </form>
+
+
+<div class="col-md-8 col-Margins">
+
+    <label class="control-label ">
+
+        Show the room diagrams (at the bottom of the page)
+
+        <input type="checkbox" data-toggle="collapse" data-target="#isRoomDiagrammessage" class="form-control" id="chkRoomDiagrammessage" />
+    </label>
+
+
+    <div class="collapse alert alert-info" id="isRoomDiagrammessage">
+        @await Html.PartialAsync("~/Views/Shared/_carousel.cshtml")
+    </div>
+
+    <div class="schedular" id="calendarrefresh">
+        @await Html.PartialAsync("~/Views/Shared/_calendar.cshtml")
+    </div>
+</div>
+</div>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-
-<div class="collapse alert alert-info" id="isRoomDiagrammessage">
-    @await Html.PartialAsync("~/Views/Shared/_carousel.cshtml")
-</div>
-
-<div class="schedular" id="calendarrefresh">
-    @await Html.PartialAsync("~/Views/Shared/_calendar.cshtml")
-</div>
-
-
 @*<div id="calendar"></div>
 
     <script src="~/js/SchedularCustom.js"></script>

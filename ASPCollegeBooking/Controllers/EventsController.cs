@@ -18,7 +18,6 @@ namespace ASPCollegeBooking.Controllers
     public class EventsController : Controller
     {
         private readonly BookingContext _context;
-        CultureInfo MyCultureInfo = new CultureInfo("en-NZ");
 
         public EventsController(BookingContext context)
         {
@@ -69,7 +68,7 @@ namespace ASPCollegeBooking.Controllers
         // GET: Events/Create
         public IActionResult Create()
         {
-
+            ViewBag.TodayDate = DateTime.Today.ToLongDateString();
             OrderedRooms or = new OrderedRooms(_context);
 
             ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
@@ -170,7 +169,9 @@ namespace ASPCollegeBooking.Controllers
         {
             if (id != events.Id)
             {
-                return NotFound();
+                //warning you can change the edit/ID in the task bar and save it back ss
+                events.Id = id;
+                //  return NotFound();
             }
 
             if (ModelState.IsValid && events.End > events.Start)
@@ -191,9 +192,9 @@ namespace ASPCollegeBooking.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("index", "Events");
+                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction("index", "Events");
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Events/Delete/5
