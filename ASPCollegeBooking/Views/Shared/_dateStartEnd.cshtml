@@ -1,0 +1,73 @@
+﻿@model Events
+<div class="form-group" id="datestart">
+    <label asp-for="Start" class="control-label"></label>
+    @Html.TextBoxFor(model => model.Start, htmlAttributes: new { @class = "form-control DTStart" })
+
+    <span asp-validation-for="Start" class="text-danger"></span>
+</div>
+
+<div class="form-group" id="dateend">
+    <label asp-for="End" class="control-label"></label>
+    @Html.TextBoxFor(model => model.End, htmlAttributes: new { @class = "form-control DTEnd" })
+
+    <span asp-validation-for="End" class="text-danger  field-validation-valid"
+          data-valmsg-for="End" data-valmsg-replace="true"></span>
+</div>
+
+<script src="~/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+    $(document).ready(function () {
+            $(".DTStart").datetimepicker({
+                format: 'DD-MM-YYYY HH:mm',
+                inline: true,
+                sideBySide: true,
+                toolbarPlacement: 'bottom',
+                showClose: true
+    });
+        });
+
+        $(document).ready(function () {
+    //http://eonasdan.github.io/bootstrap-datetimepicker/
+
+            $(".DTEnd").datetimepicker({
+                format: 'DD-MM-YYYY HH:mm',
+                inline: true,
+                sideBySide: true,
+                toolbarPlacement: 'bottom',
+                showClose: true
+
+            });
+        });
+        //holy crap it works
+            $(function () {
+                $('.DTStart').datetimepicker();
+                $('.DTEnd').datetimepicker({
+                useCurrent: false //Important! See issue #1075
+                    });
+                $(".DTStart").on("dp.change", function (e) {
+                    $('.DTEnd').data("DateTimePicker").minDate(e.date);
+            });
+                $("#DTEnd").on("dp.change", function (e) {
+                    $('.DTEnd').data("DateTimePicker").maxDate(e.date);
+            });
+                });
+
+  $(document).ready(function() {
+    document.getElementById("Title").focus();
+    });
+
+
+    @*     Must run this last so the focus returns to the Title
+
+     https://stackoverflow.com/questions/11122268/updating-partial-view-with-jquery-in-asp-net-mvc-c-sharp *@
+
+</script>
+<script type="text/javascript">
+    $(function() {
+
+        $('#DTStart').change(function() {
+                alert("function running.");
+
+
+                @*$("#calendarrefresh").load(' @await Html.PartialAsync("~/Views/Shared/_calendar.cshtml")');*@
+</script>
