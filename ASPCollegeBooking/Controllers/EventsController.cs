@@ -18,10 +18,18 @@ namespace ASPCollegeBooking.Controllers
     public class EventsController : Controller
     {
         private readonly BookingContext _context;
+        private readonly OrderedRooms or;
+
+        // private OrderedRooms or;
+
+
 
         public EventsController(BookingContext context)
         {
             _context = context;
+            or = new OrderedRooms(_context);
+
+            //    or = new OrderedRooms(_context);
         }
 
         // GET: Events
@@ -69,8 +77,7 @@ namespace ASPCollegeBooking.Controllers
         public IActionResult Create()
         {
             ViewBag.TodayDate = DateTime.Today.ToLongDateString();
-            OrderedRooms or = new OrderedRooms(_context);
-
+            
             ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
             return View();
         }
@@ -127,8 +134,7 @@ namespace ASPCollegeBooking.Controllers
             else
             {
                 //if model is not valid return view - have to refresh context
-                OrderedRooms or = new OrderedRooms(_context);
-                ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
+            ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
 
                 return View();
 
@@ -152,6 +158,9 @@ namespace ASPCollegeBooking.Controllers
             //{
             //    return NotFound();
             //}
+           
+
+            ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
 
             var events = await _context.Events.SingleOrDefaultAsync(m => m.Id == id);
             if (events == null)

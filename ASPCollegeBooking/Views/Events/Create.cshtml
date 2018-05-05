@@ -4,8 +4,8 @@
     }*@
 <h2>Create a New Event  -   @ViewBag.TodayDate     </h2>
 <form asp-action="Create" class="form-horizontal">
-    <div class="row">
-        <div class="col-md-4 col-Margins">
+    <div class="row col-Margins">
+        <div class="col-md-4 ">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -14,9 +14,9 @@
                 <input asp-for="Title" id="Title" class=" form-control" autofocus />
 
                 <span asp-validation-for="Title" class="text-danger"></span>
-                <label class="control-label">Tick if its for a Full Day</label>
-
-                <input type="checkbox" data-toggle="collapse" data-target="#isfulldaymessage" asp-for="IsFullDay" class="form-control checkbox-inline" id="chkFullDay" />
+                <label class="control-label">
+                    <input type="checkbox" data-toggle="collapse" data-target="#isfulldaymessage" asp-for="IsFullDay" id="chkFullDay" />  Tick if its for a Full Day
+                </label>
 
                 <div class="alert alert-info  collapse" id="isfulldaymessage">Just add the date fields. The times will be generated from 9-5pm.</div>
 
@@ -30,9 +30,9 @@
                 </select>
                 <span asp-validation-for="ResourceId" class="text-danger"></span>
 
-                <label class="control-label">Do you want it to repeat daily or weekly?</label>
-
-                <input type="checkbox" data-toggle="collapse" data-target="#isRepeatmessage" class="form-control" id="chkrepeat" />
+                <label class="control-label">
+                    <input type="checkbox" data-toggle="collapse" data-target="#isRepeatmessage" id="chkrepeat" />  Do you want to repeat daily or weekly?
+                </label>
 
                 <div class="collapse" id="isRepeatmessage">
                     <div class="alert alert-info">Just add many days or how many weeks you want. Weekends will be skipped in the calculation</div>
@@ -55,10 +55,10 @@
 </form>
 
 
-<div class="col-md-8 col-Margins">
+<div class="col-md-8 ">
     <label class="control-label ">
-        Show the room diagrams
-        <input type="checkbox" data-toggle="collapse" data-target="#isRoomDiagrammessage" class="form-control" id="chkRoomDiagrammessage" />
+
+        <input type="checkbox" data-toggle="collapse" data-target="#isRoomDiagrammessage" id="chkRoomDiagrammessage">  Show the room diagrams
     </label>
 
 
@@ -66,7 +66,7 @@
         @await Html.PartialAsync("~/Views/Shared/_carousel.cshtml")
     </div>
 
-    <div class="schedular" id="calendarrefresh">
+    <div id="calendarrefresh">
         @await Html.PartialAsync("~/Views/Shared/_calendar.cshtml")
     </div>
 </div>
@@ -76,67 +76,11 @@
 </div>
 
 
-@*<div id="calendar"></div>
 
-    <script src="~/js/SchedularCustom.js"></script>
-    <link href="~/css/SchedularCustom.css" rel="stylesheet" />*@
-
-
-
-@*<link href="~/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker-standalone.css" rel="stylesheet" />*@
 @section scripts
     {
     <script>
-    @*<script src="~/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 
-
-
-            $(document).ready(function () {
-                $(".DTStart").datetimepicker({
-                    format: 'DD-MM-YYYY HH:mm',
-                    inline: true,
-                    sideBySide: true,
-                    toolbarPlacement: 'bottom',
-                    showClose: true
-
-                });
-            });
-
-            $(document).ready(function () {
-
-                //http://eonasdan.github.io/bootstrap-datetimepicker/
-
-
-                $(".DTEnd").datetimepicker({
-                    format: 'DD-MM-YYYY HH:mm',
-                    inline: true,
-                    sideBySide: true,
-                    toolbarPlacement: 'bottom',
-                    showClose: true
-
-                });
-            });
-            //holy crap it works
-                $(function () {
-                    $('.DTStart').datetimepicker();
-                    $('.DTEnd').datetimepicker({
-                    useCurrent: false //Important! See issue #1075
-                        });
-                    $(".DTStart").on("dp.change", function (e) {
-                        $('.DTEnd').data("DateTimePicker").minDate(e.date);
-                });
-                    $("#DTEnd").on("dp.change", function (e) {
-                        $('.DTEnd').data("DateTimePicker").maxDate(e.date);
-                });
-                    });*@
-
-
-
-
-    @*     Must run this last so the focus returns to the Title *@
-    @*$(document).ready(function() {
-    document.getElementById("Title").focus();
-    });*@
     @*  https://stackoverflow.com/questions/11122268/updating-partial-view-with-jquery-in-asp-net-mvc-c-sharp *@
 
     </script>
@@ -173,8 +117,4 @@
                             });
                         });
         </script>*@
-
-
-
-
 }
