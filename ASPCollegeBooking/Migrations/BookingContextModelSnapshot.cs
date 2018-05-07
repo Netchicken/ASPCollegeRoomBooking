@@ -34,13 +34,15 @@ namespace ASPCollegeBooking.Migrations
 
                     b.Property<string>("Organizer");
 
-                    b.Property<string>("ResourceId");
+                    b.Property<string>("ResourceId")
+                        .IsRequired();
 
                     b.Property<int?>("RoomID");
 
                     b.Property<DateTime>("Start");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired();
 
                     b.Property<int>("Weeks");
 

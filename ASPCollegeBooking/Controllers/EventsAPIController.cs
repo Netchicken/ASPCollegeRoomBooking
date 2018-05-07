@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ASPCollegeBooking.Data;
 using ASPCollegeBooking.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace ASPCollegeBooking.Controllers
@@ -103,7 +104,7 @@ namespace ASPCollegeBooking.Controllers
 
         // DELETE: api/EventsApi/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEvents([FromRoute] int id)
+       public async Task<IActionResult> DeleteEvents([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {

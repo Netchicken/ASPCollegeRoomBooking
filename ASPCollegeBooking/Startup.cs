@@ -20,11 +20,6 @@ namespace ASPCollegeBooking
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-
-
-
-
         }
 
         public IConfiguration Configuration { get; }
@@ -36,6 +31,7 @@ namespace ASPCollegeBooking
         {
             services.Configure<RequestLocalizationOptions>(options =>
             {
+                //set the culture for New Zealand for the whole project
                 var cultureInfo = new CultureInfo("en-NZ");
                 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
                 CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
@@ -48,7 +44,7 @@ namespace ASPCollegeBooking
             //  services.AddDbContext<ApplicationDbContext>(options =>
             //     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = admin.db"));
+
 
 
             //services.AddDbContext<BookingContext>(options =>
@@ -56,12 +52,23 @@ namespace ASPCollegeBooking
 
             // Use SQL Database if in Azure, otherwise, use SQLite
             //----------------------
-            //if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
-            //    services.AddDbContext<BookingContext>(options =>
-            //            options.UseSqlServer(Configuration.GetConnectionString("RoomBookingConnection")));
-            //else
-            //    services.AddDbContext<BookingContext>(options =>
-            //            options.UseSqlite("Data Source=RoomBooking.db"));
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            {
+                services.AddDbContext<BookingContext>(options =>
+                    options.UseSqlite("Data Source= RoomBooking.db"));
+
+
+
+                services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = admin.db"));
+            }
+            else
+            {
+
+                services.AddDbContext<BookingContext>(options =>
+                    options.UseSqlite("Data Source = RoomBooking.db"));
+
+                services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = admin.db"));
+            }
             //end------------------------------
 
             ////If this code detects that it is running in production (which indicates the Azure environment), then it uses the connection string you configured to connect to the SQL Database.
@@ -72,7 +79,7 @@ namespace ASPCollegeBooking
             //  services.BuildServiceProvider().GetService<BookingContext>().Database.Migrate();
 
 
-            services.AddDbContext<BookingContext>(options => options.UseSqlite("Data Source = RoomBooking.db"));
+            //  services.AddDbContext<BookingContext>(options => options.UseSqlite("Data Source = RoomBooking.db"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

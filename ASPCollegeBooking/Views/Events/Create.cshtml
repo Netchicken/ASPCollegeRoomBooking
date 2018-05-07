@@ -2,9 +2,19 @@
 @model Events
 @*https://www.w3schools.com/bootstrap/bootstrap_forms_inputs.asp
     }*@
-<h2>Create a New Event  -   @ViewBag.TodayDate     </h2>
-<form asp-action="Create" class="form-horizontal">
-    <div class="row col-Margins">
+
+<div class="row">
+    <div class="col-md-6">
+        <h2 class="">
+            Create a New Event
+        </h2>
+    </div>
+    <h3 align="right" class="text-muted"> @ViewBag.TodayDate </h3>
+</div>
+
+<div class="row col-Margins">
+    <form asp-action="Create" class="form-horizontal">
+
         <div class="col-md-4 ">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -52,36 +62,65 @@
                 </div>
             </div>
         </div>
-</form>
+    </form>
 
 
-<div class="col-md-8 ">
-    <label class="control-label ">
+    <div class="col-md-8 ">
+        <label class="control-label ">
 
-        <input type="checkbox" data-toggle="collapse" data-target="#isRoomDiagrammessage" id="chkRoomDiagrammessage">  Show the room diagrams
-    </label>
+            <input type="checkbox" data-toggle="collapse" data-target="#isRoomDiagrammessage" id="chkRoomDiagrammessage">  Show the room diagrams
+        </label>
 
 
-    <div class="collapse alert alert-info" id="isRoomDiagrammessage">
-        @await Html.PartialAsync("~/Views/Shared/_carousel.cshtml")
+        <div class="collapse alert alert-info" id="isRoomDiagrammessage">
+            @await Html.PartialAsync("~/Views/Shared/_carousel.cshtml")
+        </div>
+
+        <div id="calendarrefresh">
+            @await Html.PartialAsync("~/Views/Shared/_calendar.cshtml")
+        </div>
     </div>
-
-    <div id="calendarrefresh">
-        @await Html.PartialAsync("~/Views/Shared/_calendar.cshtml")
-    </div>
-</div>
 </div>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
-
-
 @section scripts
     {
+    <script src="~/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <script>
 
-    @*  https://stackoverflow.com/questions/11122268/updating-partial-view-with-jquery-in-asp-net-mvc-c-sharp *@
+
+        $(document).ready(function() {
+            $(".DTStart").datetimepicker({
+                format: 'DD-MM-YYYY HH:mm',
+                inline: true,
+                sideBySide: true,
+                toolbarPlacement: 'bottom',
+                showClose: true
+            });
+        });
+
+        $(document).ready(function() {
+
+            //http://eonasdan.github.io/bootstrap-datetimepicker/
+
+
+            $(".DTEnd").datetimepicker({
+                format: 'DD-MM-YYYY HH:mm',
+                inline: true,
+                sideBySide: true,
+                toolbarPlacement: 'bottom',
+                showClose: true
+
+            });
+        });
+
+        @*     Must run this last so the focus returns to the Title *@
+        $(document).ready(function() {
+            document.getElementById("Title").focus();
+        });
+        @*  https://stackoverflow.com/questions/11122268/updating-partial-view-with-jquery-in-asp-net-mvc-c-sharp *@
 
     </script>
     <script type="text/javascript">
@@ -89,8 +128,6 @@
 
         $('#DTStart').change(function() {
                 alert("function running.");
-
-
                 $("#calendarrefresh").load(' @await Html.PartialAsync("~/Views/Shared/_calendar.cshtml")');
 
 
@@ -100,21 +137,4 @@
 
 
     </script>
-
-    @*
-        <script type="text/javascript">
-                        $(document).ready(function () {
-                            $("#chkFullDay").on("click", function () {
-                                if (document.getElementById('chkFullDay').checked) {
-
-                                    $("#isfulldaymessage").show();
-
-                                } else {
-
-                                    $("#isfulldaymessage").hide();
-
-                                }
-                            });
-                        });
-        </script>*@
 }

@@ -51,8 +51,8 @@ namespace ASPCollegeBooking.Controllers
 
         public IActionResult Scheduler()
         {
-
-            return View();
+           
+             return View();
         }
 
         // GET: Events/Details/5

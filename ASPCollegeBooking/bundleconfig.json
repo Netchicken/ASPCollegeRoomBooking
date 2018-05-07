@@ -1,17 +1,14 @@
-﻿// Configure bundling and minification for the project.
-// More info at https://go.microsoft.com/fwlink/?LinkId=808241 https://docs.microsoft.com/en-us/aspnet/core/client-side/bundling-and-minification?view=aspnetcore-2.1&tabs=visual-studio%2Caspnetcore2x
 [
   {
     "outputFileName": "wwwroot/css/site.min.css",
-    // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
-      "wwwroot/css/site.css",
-      "wwwroot/lib/bootstrap/dist/css/bootstrap.css",
-      "wwwroot/lib/fullcalendar/dist/fullcalendar.css",
-      "wwwroot/lib/fullcalendar-scheduler/dist/scheduler.css",
-      "wwwroot/lib/qtip2/dist/jquery.qtip.css",
-      "wwwroot/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"
-
+      "~/css/site.css",
+      "~/lib/bootstrap/dist/css/bootstrap.css",
+      "~/lib/fullcalendar/dist/fullcalendar.css",
+      "~/lib/fullcalendar-scheduler/dist/scheduler.css",
+      "~/lib/qtip2/dist/jquery.qtip.css",
+      "~/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css",
+      "~/css/SchedularCustom.css"
     ]
   },
   {
@@ -20,21 +17,18 @@
       "wwwroot/js/site.js",
       "wwwroot/lib/moment/moment.js",
       "wwwroot/lib/jquery/dist/jquery.js",
+      "~/lib/fullcalendar/dist/fullcalendar.min.js",
+      "~/lib/fullcalendar-scheduler/dist/scheduler.js",
+      "wwwroot/js/SchedularCustom.js",
       "wwwroot/lib/bootstrap/dist/js/bootstrap.js",
-      "wwwroot/lib/jquery/dist/jquery.js",
       "wwwroot/js/jquery.datetimepicker.js",
       "wwwroot/lib/qtip2/dist/jquery.qtip.js",
       "wwwroot/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
-
-
-
+     
     ],
-    // Optionally specify minification options
     "minify": {
       "enabled": true,
       "renameLocals": true
-    },
-    // Optionally generate .map file
-    "sourceMap": false
+    }
   }
 ]

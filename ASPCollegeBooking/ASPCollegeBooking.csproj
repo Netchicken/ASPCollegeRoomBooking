@@ -45,6 +45,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="DevRoomBooking.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="RoomBooking.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
