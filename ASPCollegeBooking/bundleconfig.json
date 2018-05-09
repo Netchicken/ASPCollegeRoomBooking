@@ -23,8 +23,9 @@
       "wwwroot/lib/bootstrap/dist/js/bootstrap.js",
       "wwwroot/js/jquery.datetimepicker.js",
       "wwwroot/lib/qtip2/dist/jquery.qtip.js",
-      "wwwroot/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
-     
+      "wwwroot/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js",
+      "wwwroot/lib/sweetalert/dist/sweetalert.min.js"
+
     ],
     "minify": {
       "enabled": true,

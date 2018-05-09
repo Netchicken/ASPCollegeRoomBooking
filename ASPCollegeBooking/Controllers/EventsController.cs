@@ -51,8 +51,8 @@ namespace ASPCollegeBooking.Controllers
 
         public IActionResult Scheduler()
         {
-           
-             return View();
+
+            return View();
         }
 
         // GET: Events/Details/5
@@ -77,7 +77,7 @@ namespace ASPCollegeBooking.Controllers
         public IActionResult Create()
         {
             ViewBag.TodayDate = DateTime.Today.ToLongDateString();
-            
+
             ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
             return View();
         }
@@ -102,6 +102,8 @@ namespace ASPCollegeBooking.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,ResourceId,EventColor,Start,End,Title,RoomID,IsFullDay,Days,Weeks")] Events events)
         {
+            ViewBag.TodayDate = DateTime.Today.ToLongDateString();
+
             //is the start date older than the end date?
             if (ModelState.IsValid)
             {
@@ -128,13 +130,14 @@ namespace ASPCollegeBooking.Controllers
                 {//we dont have a clash
                     _context.Add(events);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index)); //open the details 
+                    // return RedirectToAction(nameof(Index)); //open the details 
+                    return View();
                 }
             }
             else
             {
                 //if model is not valid return view - have to refresh context
-            ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
+                ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
 
                 return View();
 
@@ -158,7 +161,7 @@ namespace ASPCollegeBooking.Controllers
             //{
             //    return NotFound();
             //}
-           
+
 
             ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
 

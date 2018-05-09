@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ASPCollegeBooking.Data;
 using ASPCollegeBooking.Models;
 using ASPCollegeBooking.Services;
+using Microsoft.AspNetCore.Localization;
 
 namespace ASPCollegeBooking
 {
@@ -31,7 +32,7 @@ namespace ASPCollegeBooking
         {
             services.Configure<RequestLocalizationOptions>(options =>
             {
-                //set the culture for New Zealand for the whole project
+                //set the culture for New Zealand for the whole project this might not be working, check it out by commenting it out.
                 var cultureInfo = new CultureInfo("en-NZ");
                 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
                 CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
@@ -106,6 +107,21 @@ namespace ASPCollegeBooking
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //https://joonasw.net/view/aspnet-core-localization-deep-dive
+            IList<CultureInfo> supportedCultures = new List<CultureInfo>
+            {
+                new CultureInfo("en-NZ")
+            };
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+
+                DefaultRequestCulture = new RequestCulture("en-NZ"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
+
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

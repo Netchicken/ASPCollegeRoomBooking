@@ -12,10 +12,10 @@
                         //    "\n Room id " + event.resourceId +
                         //    "\n Row id " + event.id
 
-                        //);
+                        //);    if (!confirm("Are you sure you want to change the room booking?")) {
 
-                        if (!confirm("Are you sure you want to change the room booking?")) {
-                            alert("Goodbye then");
+                        if (!confirm("Are you sure you want to change the " + event.title + " room booking?")) { 
+                            swal("Goodbye then, no changes have been made");
                             revertFunc();
                         } else {
                           //  alert("Lets Do this!"),
@@ -53,14 +53,14 @@
 
 
                                 success: function () {
-                                    alert("You Beut!");
+                                    swal("You Beut! " + event.title + " has moved successfully");
                                 },
                                 failure: function (data) {
-                                    alert(data.responseText);
+                                 alert("Ouch, It didn't work " + data.responseText);
                                 },
                                 error: function (data) {
-                                    alert(data.responseText),
-                                        alert("That Sucks!");
+                                    //alert(data.responseText),
+                                    swal("Sorry you can't drag on this screen. Try back on the Main screen. \n Despite how it looks the change hasn't occured, its not saved.\n \nIts an illusion, just the shadows of reality on the cave wall.");
                                 }
 
                                 //        data: {
