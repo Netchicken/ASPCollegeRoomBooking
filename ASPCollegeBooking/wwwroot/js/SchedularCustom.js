@@ -1,19 +1,11 @@
 ﻿    $(function () { // document ready
      $('#calendar').fullCalendar({
-             now:  Date.now(), //'2017-10-07',
+             now:  Date.now(), 
                     editable: true, // enable draggable events
 
                     //This registers the Drag and drop
                     eventDrop: function (event, delta, revertFunc) {
-                        //alert(event.title +
-                        //    "\n" + moment().format('MMMM Do YYYY, h:mm:ss a') + " was dropped  " +
-                        //    "\n Start " + event.start.format("dddd MMMM YYYY") +
-                        //    "\n End " + event.end.format("dddd MMMM YYYY") +
-                        //    "\n Room id " + event.resourceId +
-                        //    "\n Row id " + event.id
-
-                        //);    if (!confirm("Are you sure you want to change the room booking?")) {
-
+                       
                         if (!confirm("Are you sure you want to change the " + event.title + " room booking?")) { 
                             swal("Goodbye then, no changes have been made");
                             revertFunc();
@@ -42,39 +34,34 @@
                                     ResourceId: event.resourceId,
                                     ID: event.id,
                                     Start: event.start,
-                                    Title: event.title
+                                    Title: event.title,
+                                    Email: event.email
                                 }),
                                 //    data: JSON.stringify(uploadevents),
 
-                                // $(event.start).val,//.format("dd/MM/YYYY HH:MM:SS ")).val(),
-                                //$(event.end).val(),
-                                //    Start: $("18/11/2017 2:23:00 PM"),
-                                //    End: $("18/12/2017 2:23:00 PM"),
-
-
+                               
                                 success: function () {
                                     swal("You Beut! " + event.title + " has moved successfully");
                                 },
                                 failure: function (data) {
-                                 alert("Ouch, It didn't work " + data.responseText);
+                                    alert("Ouch, It didn't work " + data.responseText);
+                                    revertFunc();
                                 },
-                                error: function (data) {
+                                error: function(data) {
                                     //alert(data.responseText),
-                                    swal("Sorry you can't drag on this screen. Try back on the Main screen. \n Despite how it looks the change hasn't occured, its not saved.\n \nIts an illusion, just the shadows of reality on the cave wall.");
+
+                                    if (event.Email === undefined) {
+
+                                        swal("You have to be logged in the alter bookings - ");
+                                      
+                                    } else {
+                                        swal("Sorry you can't drag on this screen " +
+                                            event.Email +
+                                            " Try back on the Main screen. \n Despite how it looks the change hasn't occured, its not saved.\n \nIts an illusion, just the shadows of reality on the cave wall.");
+                                    }
+                                    revertFunc();
                                 }
-
-                                //        data: {
-                                //           ID: $(event.id).val(),
-                                //            ResourceId: $(event.resourceId).val(),
-                                //            EventColor: $("").val(),
-                                //            //17/11/2017 1:58:00 PM
-                                //            Start: $(event.start.format("dd/MM/YYYY HH:MM:SS ")).val(),
-                                //            End: $(event.end).val(),
-                                //            Title: $("").val()
-
-
-                                //}
-                            });
+                               });
 
                         };
 
@@ -127,11 +114,11 @@
 
                     eventRender: function (event, element) {
                         element.qtip({
-                            content: (event.title +
-                                "\n Start " + event.start.format("dddd MMMM YYYY") +
-                                "\n End " + event.end.format("dddd MMMM YYYY") +
-                                "\n Room id " + event.resourceId +
-                                "\n Row id " + event.id
+                            content: (
+                                "<h5>" + "Start " + event.start.format("dddd MMMM YYYY") + "</h5>" +
+                                "<h5>" + "End " + event.end.format("dddd MMMM YYYY") + "</h5>" +
+                                "<h6>" + "Room " + event.resourceId + "</h6>" +
+                                "<h6>" + "Email " + event.email + "</h6>" 
                             ),
                             position: {
                                 //adjust: {

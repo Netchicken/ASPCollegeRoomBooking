@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using ASPCollegeBooking.Data;
 using ASPCollegeBooking.DTO;
 using ASPCollegeBooking.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace ASPCollegeBooking.Controllers
@@ -19,18 +21,21 @@ namespace ASPCollegeBooking.Controllers
     {
         private readonly BookingContext _context;
         private readonly OrderedRooms or;
-
+        public UserManager<ApplicationUser> UserManager { get; }
         // private OrderedRooms or;
 
 
 
-        public EventsController(BookingContext context)
+        public EventsController(BookingContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             or = new OrderedRooms(_context);
+            UserManager = userManager;
 
             //    or = new OrderedRooms(_context);
         }
+
+
 
         // GET: Events
         public async Task<IActionResult> Index()
@@ -73,13 +78,18 @@ namespace ASPCollegeBooking.Controllers
             return View(events);
         }
 
+        [Authorize]
         // GET: Events/Create
         public IActionResult Create()
         {
             ViewBag.TodayDate = DateTime.Today.ToLongDateString();
 
             ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
+
+
             return View();
+
+
         }
 
 
@@ -104,6 +114,14 @@ namespace ASPCollegeBooking.Controllers
         {
             ViewBag.TodayDate = DateTime.Today.ToLongDateString();
 
+            //get user details save to db
+            string email = User.Identity.Name;
+            string[] details = email.Split('@');
+
+            events.Name = details[0];
+            events.Email = email;
+
+
             //is the start date older than the end date?
             if (ModelState.IsValid)
             {
@@ -122,15 +140,13 @@ namespace ASPCollegeBooking.Controllers
                 //We have a clash
                 if (DayWeeksAllDayMods.WeHaveAClash == true)
                 {
-                    //  myClashDTO.BookingClashDic = DayWeeksAllDayMods.BookingClashDic;
                     return RedirectToAction("Clash");
-                    //  return RedirectToAction("Clash", new { clash });
+
                 }
                 else
                 {//we dont have a clash
                     _context.Add(events);
                     await _context.SaveChangesAsync();
-                    // return RedirectToAction(nameof(Index)); //open the details 
                     return View();
                 }
             }
@@ -142,8 +158,6 @@ namespace ASPCollegeBooking.Controllers
                 return View();
 
             }
-            //model is invalid
-            //  return RedirectToAction("Create");
         }
 
         public IActionResult Clash()
@@ -152,7 +166,6 @@ namespace ASPCollegeBooking.Controllers
             myClashDTO.BookingClashDic = DayWeeksAllDayMods.BookingClashDic;
             return View(myClashDTO);
         }
-
 
         // GET: Events/Edit/5
         public async Task<IActionResult> Edit(int id)

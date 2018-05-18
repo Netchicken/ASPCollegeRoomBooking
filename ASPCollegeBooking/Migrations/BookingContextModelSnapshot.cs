@@ -26,13 +26,15 @@ namespace ASPCollegeBooking.Migrations
 
                     b.Property<int>("Days");
 
+                    b.Property<string>("Email");
+
                     b.Property<DateTime>("End");
 
                     b.Property<string>("EventColor");
 
                     b.Property<bool>("IsFullDay");
 
-                    b.Property<string>("Organizer");
+                    b.Property<string>("Name");
 
                     b.Property<string>("ResourceId")
                         .IsRequired();

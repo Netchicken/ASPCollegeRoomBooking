@@ -36,17 +36,12 @@ namespace ASPCollegeBooking
                 var cultureInfo = new CultureInfo("en-NZ");
                 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
                 CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
-
                 options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-NZ");
                 options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-NZ") };
             });
 
-
             //  services.AddDbContext<ApplicationDbContext>(options =>
             //     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-
-
 
             //services.AddDbContext<BookingContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("RoomBookingConnection")));
@@ -58,16 +53,12 @@ namespace ASPCollegeBooking
                 services.AddDbContext<BookingContext>(options =>
                     options.UseSqlite("Data Source= RoomBooking.db"));
 
-
-
                 services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = admin.db"));
             }
             else
             {
-
                 services.AddDbContext<BookingContext>(options =>
                     options.UseSqlite("Data Source = RoomBooking.db"));
-
                 services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = admin.db"));
             }
             //end------------------------------
@@ -87,6 +78,7 @@ namespace ASPCollegeBooking
                 .AddDefaultTokenProviders();
 
             //Change the password requirements of the login system
+            //https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.1&tabs=visual-studio%2Caspnetcore2x
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -95,6 +87,29 @@ namespace ASPCollegeBooking
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredUniqueChars = 0;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
+
+            //https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.1&tabs=visual-studio%2Caspnetcore2x
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                // If the LoginPath isn't set, ASP.NET Core defaults 
+                // the path to /Account/Login.
+                options.LoginPath = "/Account/Login";
+                // If the AccessDeniedPath isn't set, ASP.NET Core defaults 
+                // the path to /Account/AccessDenied.
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.SlidingExpiration = true;
             });
 
 
@@ -134,6 +149,7 @@ namespace ASPCollegeBooking
             }
 
             app.UseStaticFiles(); //added this to run js
+            //Identity is enabled for the application by calling UseAuthentication in the Configure method. UseAuthentication adds authentication middleware to the request pipeline.
             app.UseAuthentication();
 
             app.UseMvc(routes =>

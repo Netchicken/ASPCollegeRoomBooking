@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ASPCollegeBooking.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASPCollegeBooking.Controllers
 {
@@ -14,6 +15,7 @@ namespace ASPCollegeBooking.Controllers
         {
             return View();
         }
+
 
         public IActionResult RoomGraphic()
         {

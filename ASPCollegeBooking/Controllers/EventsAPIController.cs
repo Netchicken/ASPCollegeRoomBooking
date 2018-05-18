@@ -43,7 +43,7 @@ namespace ASPCollegeBooking.Controllers
             }
 
             var events = await _context.Events.SingleOrDefaultAsync(m => m.Id == id);
-
+           
             if (events == null)
             {
                 return NotFound();
@@ -56,7 +56,11 @@ namespace ASPCollegeBooking.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEvents([FromRoute] int id, [FromBody] Events events)
         {
-            if (!ModelState.IsValid)
+            //todo add in user check here
+
+            string email = User.Identity.Name;
+
+            if (!ModelState.IsValid ||email == null ||  events.Email != email)
             {
                 return BadRequest(ModelState);
             }
@@ -104,7 +108,7 @@ namespace ASPCollegeBooking.Controllers
 
         // DELETE: api/EventsApi/5
         [HttpDelete("{id}")]
-       public async Task<IActionResult> DeleteEvents([FromRoute] int id)
+        public async Task<IActionResult> DeleteEvents([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {

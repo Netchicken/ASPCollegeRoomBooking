@@ -33,7 +33,8 @@ namespace ASPCollegeBooking.Models
         public bool IsFullDay { get; set; }
         public int Days { get; set; }
         public int Weeks { get; set; }
-        public string Organizer { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
 
 
         //public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

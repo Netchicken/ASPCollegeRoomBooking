@@ -24,21 +24,44 @@ namespace ASPCollegeBooking.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+        //https://forums.asp.net/t/2132158.aspx?add+users+and+roles+in+asp+net+core+2+0+
+
+        //Authorization in ASP.NET Core
+        //https://docs.microsoft.com/en-us/aspnet/core/security/authorization/?view=aspnetcore-2.1
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _roleManager = roleManager;
         }
 
         [TempData]
         public string ErrorMessage { get; set; }
+
+
+        public async Task<IActionResult> AddRole(string role)
+        {
+            if (!await _roleManager.RoleExistsAsync(role))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(role));
+            }
+            return Json(_roleManager.Roles);
+        }
+        // URL to invoke the action
+
+        // https://localhost:44327/account/addrole?role=admin
+
+
 
         [HttpGet]
         [AllowAnonymous]
@@ -220,10 +243,22 @@ namespace ASPCollegeBooking.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+                //create a user
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //pass user across with password
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
+                    // Send an email with this link
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                    //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
+                    // new -->
+                    //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -246,8 +281,9 @@ namespace ASPCollegeBooking.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            _logger.LogInformation("User logged out, Goodbye.");
+            //  return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction("Scheduler", "Events");
         }
 
         [HttpPost]
@@ -455,7 +491,7 @@ namespace ASPCollegeBooking.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction("Scheduler", "Events");
             }
         }
 
