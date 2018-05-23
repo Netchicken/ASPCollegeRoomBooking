@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using ASPCollegeBooking.Data;
+using ASPCollegeBooking.Extensions;
 using ASPCollegeBooking.Models;
 using ASPCollegeBooking.Models.AccountViewModels;
 using ASPCollegeBooking.Services;
@@ -235,6 +237,9 @@ namespace ASPCollegeBooking.Controllers
             return View();
         }
 
+
+
+        //http://romansimuta.com/post/authorization-with-roles-in-asp.net-core-mvc-web-application
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -243,22 +248,19 @@ namespace ASPCollegeBooking.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                //create a user
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                //pass user across with password
+                //create a new user
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email
+                };
+                //pass in the user and the pw
                 var result = await _userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
-
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
-                    // Send an email with this link
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                    //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
-                    // new -->
-                    //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
-
-
+                    // Adding user to default "Member" role
+                    await _userManager.AddToRoleAsync(user, "Member");
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

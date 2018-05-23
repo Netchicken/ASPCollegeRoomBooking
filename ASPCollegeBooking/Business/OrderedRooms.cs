@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ASPCollegeBooking.Data;
 using ASPCollegeBooking.DTO;
+
 using ASPCollegeBooking.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,7 +39,7 @@ namespace ASPCollegeBooking.Business
                 allRoomswithInt.Add(newrooms);
             }
 
-          
+
             return allRoomswithInt.Where(r => r.IsBookable).OrderBy(r => r.ID);
         }
 

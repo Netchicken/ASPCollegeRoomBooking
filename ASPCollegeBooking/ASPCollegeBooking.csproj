@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20180521011627_adminroles.cs" />
+    <Compile Remove="Data\Migrations\20180521011627_adminroles.Designer.cs" />
     <Compile Remove="Migrations\20180428025901_revertToID.cs" />
     <Compile Remove="Migrations\20180428025901_revertToID.Designer.cs" />
     <Compile Remove="Migrations\20180428033029_NewSetup.cs" />
@@ -46,6 +48,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="admin.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="RoomBooking.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

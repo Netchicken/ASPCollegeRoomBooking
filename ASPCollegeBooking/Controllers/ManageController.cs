@@ -10,13 +10,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using ASPCollegeBooking.Data;
+using ASPCollegeBooking.Extensions;
 using ASPCollegeBooking.Models;
 using ASPCollegeBooking.Models.ManageViewModels;
 using ASPCollegeBooking.Services;
 
 namespace ASPCollegeBooking.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("[controller]/[action]")]
     public class ManageController : Controller
     {

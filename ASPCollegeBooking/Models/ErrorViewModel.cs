@@ -1,5 +1,3 @@
-using System;
-
 namespace ASPCollegeBooking.Models
 {
     public class ErrorViewModel

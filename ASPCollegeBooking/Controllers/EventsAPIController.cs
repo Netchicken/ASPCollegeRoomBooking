@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ASPCollegeBooking.Data;
+using ASPCollegeBooking.Data;
 using ASPCollegeBooking.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -43,7 +44,7 @@ namespace ASPCollegeBooking.Controllers
             }
 
             var events = await _context.Events.SingleOrDefaultAsync(m => m.Id == id);
-           
+
             if (events == null)
             {
                 return NotFound();
@@ -60,7 +61,7 @@ namespace ASPCollegeBooking.Controllers
 
             string email = User.Identity.Name;
 
-            if (!ModelState.IsValid ||email == null ||  events.Email != email)
+            if (!ModelState.IsValid || email == null || events.Email != email)
             {
                 return BadRequest(ModelState);
             }

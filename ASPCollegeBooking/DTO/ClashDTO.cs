@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ASPCollegeBooking.Models;
 
-namespace ASPCollegeBooking.Models
+namespace ASPCollegeBooking.Data
 {
     public class ClashDTO
     {

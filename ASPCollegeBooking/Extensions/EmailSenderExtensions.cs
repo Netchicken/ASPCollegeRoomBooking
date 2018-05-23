@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using ASPCollegeBooking.Services;
 
-namespace ASPCollegeBooking.Services
+namespace ASPCollegeBooking.Extensions
 {
     public static class EmailSenderExtensions
     {

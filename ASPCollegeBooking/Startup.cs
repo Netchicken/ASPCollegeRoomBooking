@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ASPCollegeBooking.Data;
+using ASPCollegeBooking.Data;
 using ASPCollegeBooking.Models;
 using ASPCollegeBooking.Services;
 using Microsoft.AspNetCore.Localization;
@@ -53,13 +54,20 @@ namespace ASPCollegeBooking
                 services.AddDbContext<BookingContext>(options =>
                     options.UseSqlite("Data Source= RoomBooking.db"));
 
+                //services.AddDbContext<ApplicationDbContext>(options =>
+                //   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
                 services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = admin.db"));
             }
             else
             {
                 services.AddDbContext<BookingContext>(options =>
                     options.UseSqlite("Data Source = RoomBooking.db"));
-                services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = admin.db"));
+
+                services.AddDbContext<ApplicationDbContext>(options =>
+                   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+                //  services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = admin.db"));
             }
             //end------------------------------
 
@@ -115,9 +123,21 @@ namespace ASPCollegeBooking
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
-
             services.AddMvc();
+            //start http://romansimuta.com/post/authorization-with-roles-in-asp.net-core-mvc-web-application  authorization with roles
+            //Underneath the covers, role-based authorization and claims-based authorization use a requirement, a requirement handler, and a pre-configured policy. These building blocks support the expression of authorization evaluations in code. The result is a richer, reusable, testable authorization structure.
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+            });
+            //end - example [Authorize(Policy = "RequireAdminRole")]
         }
+
+
+
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
