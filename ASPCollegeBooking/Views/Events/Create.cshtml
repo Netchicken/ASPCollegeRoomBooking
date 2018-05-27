@@ -7,9 +7,9 @@
 <div class="row">
     <div class="col-md-6">
 
-        <h2 class="">
+        <h3 class="">
             Create a New Event for @UserManager.GetUserName(User)
-        </h2>
+        </h3>
     </div>
     <h3 align="right" class="text-muted"> @ViewBag.TodayDate </h3>
 </div>
@@ -85,8 +85,6 @@
         </div>
 
         <div id="calendarrefresh">
-
-            <div class="alert alert-info">Drag and Drop not functional on this Calendar, go back to Scheduler</div>
             @await Html.PartialAsync("~/Views/Shared/_calendar.cshtml")
             <script src="~/lib/qtip2/dist/jquery.qtip.js"></script>
             @*<script src="~/lib/sweetalert/dist/sweetalert.min.js"></script>*@

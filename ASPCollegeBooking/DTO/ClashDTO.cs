@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ASPCollegeBooking.Models;
 
-namespace ASPCollegeBooking.Data
+namespace ASPCollegeBooking.DTO
 {
     public class ClashDTO
     {

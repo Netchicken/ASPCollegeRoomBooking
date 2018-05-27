@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using ASPCollegeBooking.Business;
@@ -10,11 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASPCollegeBooking.Data;
 using ASPCollegeBooking.DTO;
-using ASPCollegeBooking.Data;
 using ASPCollegeBooking.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace ASPCollegeBooking.Controllers
 {
@@ -23,20 +18,14 @@ namespace ASPCollegeBooking.Controllers
         private readonly BookingContext _context;
         private readonly OrderedRooms or;
         public UserManager<ApplicationUser> UserManager { get; }
-        // private OrderedRooms or;
-
-
 
         public EventsController(BookingContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             or = new OrderedRooms(_context);
             UserManager = userManager;
-
-            //    or = new OrderedRooms(_context);
         }
-
-
+        //event checking in calendar done in the EventsAPIController
 
         // GET: Events
         public async Task<IActionResult> Index()
@@ -46,36 +35,24 @@ namespace ASPCollegeBooking.Controllers
                 //find all the data in the reasource id that matches the room ID. then foreach it adding the room title to the ID
                 //https://stackoverflow.com/questions/37075142/linq-replace-column-value-with-another-value (this is beautiful)
                 _context.Events.Where(e => e.ResourceId.Equals(room.ID)).OrderBy(r => r.Room.ID).ToList().ForEach(i => i.ResourceId = i.ResourceId + " - " + room.Title);
-
-                // _context.Events.OrderByDescending(e => e.Id);
             }
-
-
             return View(await _context.Events.OrderByDescending(e => e.Id).ToListAsync());
-
         }
 
         public IActionResult Scheduler()
         {
-
             return View();
         }
 
         // GET: Events/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
-
             var events = await _context.Events
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (events == null)
             {
                 return NotFound();
             }
-
             return View(events);
         }
 
@@ -84,44 +61,24 @@ namespace ASPCollegeBooking.Controllers
         public IActionResult Create()
         {
             ViewBag.TodayDate = DateTime.Today.ToLongDateString();
-
             ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
-
-
             return View();
-
-
         }
 
-
-        //https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/search?view=aspnetcore-2.1
-        //public IActionResult Create(DateTime Start, DateTime End)
-        //{
-
-        //    OrderedRooms or = new OrderedRooms(_context);
-
-        //    ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
-        //    return View();
-        //}
-
-
-
         // POST: Events/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ResourceId,EventColor,Start,End,Title,RoomID,IsFullDay,Days,Weeks")] Events events)
+        public async Task<IActionResult> Create([Bind("ID,ResourceId,EventColor,Start,End,Title,RoomID,IsFullDay,Days,Weeks,Email")] Events events)
         {
             ViewBag.TodayDate = DateTime.Today.ToLongDateString();
 
             //get user details save to db
-            string email = User.Identity.Name;
-            string[] details = email.Split('@');
-
+            string UserEmail = User.Identity.Name;
+            string[] details = UserEmail.Split('@');
+            //pass it back to the event in the SchedularCustom.js
             events.Name = details[0];
-            events.Email = email;
-
+            events.Email = UserEmail;
 
             //is the start date older than the end date?
             if (ModelState.IsValid)
@@ -134,7 +91,6 @@ namespace ASPCollegeBooking.Controllers
                         _context.Add(booking);
                     }
                 }
-
                 //pass through the event and look for clashes where its the same room after today
                 DayWeeksAllDayMods.DoTheDatesOverlap(_context.Events.Where(e => e.ResourceId == events.ResourceId && e.End > DateTime.Now).ToList(), events);
 
@@ -142,7 +98,6 @@ namespace ASPCollegeBooking.Controllers
                 if (DayWeeksAllDayMods.WeHaveAClash == true)
                 {
                     return RedirectToAction("Clash");
-
                 }
                 else
                 {//we dont have a clash
@@ -155,9 +110,7 @@ namespace ASPCollegeBooking.Controllers
             {
                 //if model is not valid return view - have to refresh context
                 ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
-
                 return View();
-
             }
         }
 
@@ -171,13 +124,7 @@ namespace ASPCollegeBooking.Controllers
         // GET: Events/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
-
-
-            ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
+           ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
 
             var events = await _context.Events.SingleOrDefaultAsync(m => m.Id == id);
             if (events == null)
@@ -226,18 +173,12 @@ namespace ASPCollegeBooking.Controllers
         // GET: Events/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
-
             var events = await _context.Events
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (events == null)
             {
                 return NotFound();
             }
-
             return View(events);
         }
 

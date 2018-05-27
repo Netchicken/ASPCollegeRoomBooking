@@ -32,7 +32,13 @@ namespace ASPCollegeBooking.Controllers
             return _context.Events;
         }
 
+        //// GET: api/GetUserEmail
+        //[HttpGet]
+        //public string GetUserEmail()
+        //{
+        //    return User.Identity.Name;
 
+        //}
 
         // GET: api/EventsApi/5
         [HttpGet("{id}")]
@@ -59,9 +65,9 @@ namespace ASPCollegeBooking.Controllers
         {
             //todo add in user check here
 
-            string email = User.Identity.Name;
+            string UserEmail = User.Identity.Name;
 
-            if (!ModelState.IsValid || email == null || events.Email != email)
+            if (!ModelState.IsValid || UserEmail == null || events.Email != UserEmail)
             {
                 return BadRequest(ModelState);
             }
@@ -91,7 +97,7 @@ namespace ASPCollegeBooking.Controllers
 
             return NoContent();
         }
-
+        //todo this is not being triggered in Create page
         // POST: api/EventsApi
         [HttpPost]
         public async Task<IActionResult> PostEvents([FromBody] Events events)
