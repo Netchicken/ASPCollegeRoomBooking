@@ -1,0 +1,23 @@
+﻿-- Script Date: 30/05/2018 2:33 PM  - ErikEJ.SqlCeScripting version 3.5.2.75
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(1,'D1',  'orange',   1, 20 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(10,'U10',  'orange',   1 , 15 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(11,'U11 EC Office','brown', 0 , 5 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(12,'U12 Staff Cafe',  'brown',   0, 5 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(13,'U13 Coun Office',  'brown',   0, 5 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(14,'U14',  'orange',1, 20 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(15,'U15','orange',   1, 20 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(16,'U16',  'orange',   1, 15 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(17,'U17',  'orange',   1, 3  );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(18,'U18 PCopy','brown',   0, 1 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(19,'U19',  'orange',   1, 15 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(2,'D2 Interview',  'brown',   1, 3 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(20,'U20','orange',   1, 5 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(21,'U21',  'orange',1, 5 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(3,'D3','green',1, 15 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(4,'D4 Student Cafe',  'brown',1, 20 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(5,'D5 Student Kitchen',  'brown',0, 1 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(6,'D6 Office','red',0, 1 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(7,'D7 Office','red',   0, 1 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(8,'U8',  'orange',1, 15 );
+INSERT INTO [Rooms]([ID], [Title], [EventColor], [IsBookable] ,[MaxOccupancy]) VALUES(9,'U9',  'orange',1, 15 );
+

@@ -53,18 +53,25 @@
                 <div class="collapse" id="isRepeatmessage">
                     <div class="alert alert-info">Just add many days or how many weeks you want. Weekends will be skipped in the calculation</div>
 
-                    <label class="control-label ">How many Days repeat?</label>
+                    <label class="control-label ">How many Days AFTER this event repeat?</label>
 
                     <input asp-for="Days" class="form-control" min="0" value="0" />
                     <span asp-validation-for="Days" class="text-danger"></span>
 
-                    <label class="control-label">How many Weeks repeat?</label>
+                    <label class="control-label">How many Weeks AFTER this event repeat?</label>
 
                     <input asp-for="Weeks" class="form-control" min="0" value="0" />
 
                     <span asp-validation-for="Weeks" class="text-danger"></span>
 
+                    ---------
 
+
+                    <label class="control-label">How many students in your class?</label>
+
+                    <input asp-for="StudentNumbers" class="form-control" min="0" value="0" />
+
+                    <span asp-validation-for="StudentNumbers" class="text-danger"></span>
                 </div>
             </div>
 

@@ -51,7 +51,7 @@ namespace ASPCollegeBooking.Controllers
             ViewBag.Emailresponse = "Before sending - ";
             try
             {
-            var message=    SendSimpleMessageChunk.SendSimpleMessage().Content.ToString();
+                var message = SendSimpleMessageChunk.SendSimpleMessage().Content.ToString();
                 ViewBag.Emailresponse += "Simple Message sent - - - " + message;
             }
             catch (Exception e)
@@ -100,7 +100,7 @@ namespace ASPCollegeBooking.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ResourceId,EventColor,Start,End,Title,RoomID,IsFullDay,Days,Weeks,Email")] Events events)
+        public async Task<IActionResult> Create([Bind("ID,ResourceId,EventColor,Start,End,Title,RoomID,IsFullDay,Days,Weeks,Email,StudentNumbers")] Events events)
         {
             ViewBag.TodayDate = DateTime.Today.ToLongDateString();
             ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
@@ -169,7 +169,7 @@ namespace ASPCollegeBooking.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ResourceId,EventColor,Start,End,Title")] Events events)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,ResourceId,EventColor,Start,End,Title,StudentNumbers")] Events events)
         {
             if (id != events.Id)
             {

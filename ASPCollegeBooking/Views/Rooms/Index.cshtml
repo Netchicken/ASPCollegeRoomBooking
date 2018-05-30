@@ -16,6 +16,7 @@
                 @Html.DisplayNameFor(model => model.EventColor)
             </th>
             <th>Can you book the room?</th>
+            <th> @Html.DisplayNameFor(model => model.MaxOccupancy)</th>
             <th></th>
         </tr>
     </thead>
@@ -31,6 +32,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.IsBookable)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaxOccupancy)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

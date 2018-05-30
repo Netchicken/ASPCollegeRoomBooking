@@ -30,6 +30,7 @@ namespace ASPCollegeBooking.Models
         public int Weeks { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        public int StudentNumbers { get; set; }
 
 
         //public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

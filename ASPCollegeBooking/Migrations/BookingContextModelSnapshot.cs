@@ -43,6 +43,8 @@ namespace ASPCollegeBooking.Migrations
 
                     b.Property<DateTime>("Start");
 
+                    b.Property<int>("StudentNumbers");
+
                     b.Property<string>("Title")
                         .IsRequired();
 

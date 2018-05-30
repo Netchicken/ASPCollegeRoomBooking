@@ -57,7 +57,7 @@ namespace ASPCollegeBooking.Controllers
         //Guid are messing up the room bookings BUT I can't turnit all to ints, so I generate a new int from the max of the existing number +1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Title,EventColor,IsBookable")] Rooms rooms)
+        public async Task<IActionResult> Create([Bind("ID,Title,EventColor,IsBookable,MaxOccupancy")] Rooms rooms)
         {
             if (ModelState.IsValid)
             {
@@ -100,7 +100,7 @@ namespace ASPCollegeBooking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,EventColor,IsBookable")] Rooms rooms)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,EventColor,IsBookable,MaxOccupancy")] Rooms rooms)
         {
             if (id != rooms.ID)
             {
