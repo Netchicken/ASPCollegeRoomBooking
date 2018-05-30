@@ -16,7 +16,7 @@
                          //   alert("Lets Do this!"),
                             //this isn't being triggered in create
                         // @Url.Action("PutEvents", "EventsApi", 5)
-                        //https://stackoverflow.com/questions/43644653/asp-net-mvc-prevent-action-redirection-with-ajax
+                        
                             $.ajax({
                                 type: "PUT",
                                 url: "/api/EventsAPI/" + event.id,

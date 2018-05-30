@@ -12,6 +12,8 @@ namespace ASPCollegeBooking.Business
         public static Dictionary<Events, Events> BookingClashDic = new Dictionary<Events, Events>();
         public static bool WeHaveAClash = false;
 
+
+        //send it back to be saved tothe DB list<events>
         public static IEnumerable<Events> EventCalc(Events booking)
         {
 
@@ -38,7 +40,8 @@ namespace ASPCollegeBooking.Business
             DateTime StartDate = booking.Start;
             DateTime EndDate = booking.End;
 
-            if (booking.Days > 0)
+            //days booked, but not weeks
+            if (booking.Days > 0 && booking.Weeks == 0)
             {
                 // create new bookings for the amount of days - account for weekends
 
@@ -69,10 +72,9 @@ namespace ASPCollegeBooking.Business
                 }
             }
 
-            if (booking.Weeks > 0)
+            //weeks booked but not days
+            if (booking.Days == 0 && booking.Weeks > 0)
             {
-
-
                 //  create new bookings for the amount of weeks 
                 for (int i = 0; i < booking.Weeks; i++)
                 {
@@ -82,14 +84,9 @@ namespace ASPCollegeBooking.Business
                     singleBooking.End = EndDate.AddDays(weeks);
 
                     //check booking against database
-
-
-
                     DoTheDatesOverlap(originalbookings, singleBooking);
 
                     //show the error message
-
-
                     LoadNewBookingElements(booking, singleBooking);
 
                     originalbookings.Add(singleBooking);
@@ -97,6 +94,53 @@ namespace ASPCollegeBooking.Business
                     //add check here
                 }
             }
+
+            //both weeks and days are used
+
+            if (booking.Days > 0 && booking.Weeks > 0)
+            {
+                //todo both days and weeks
+
+
+
+                for (int i = 0; i < booking.Weeks; i++)
+                {
+                    StartDate = StartDate.AddDays(7);
+                    EndDate = EndDate.AddDays(7);
+                    for (int j = 0; j < booking.Days; j++)
+                    {
+                        Events singleBooking = new Events();
+                        singleBooking.Start = StartDate.AddDays(j + 1);
+                        singleBooking.End = EndDate.AddDays(j + 1);
+
+                        //if the booking is a saturday add 2 days to make it a monday
+                        if (booking.Start.DayOfWeek == DayOfWeek.Saturday)
+                        { //move it to Monday
+                            singleBooking.Start = singleBooking.Start.AddDays(2);
+                            singleBooking.End = singleBooking.End.AddDays(2);
+                        }
+
+                        DoTheDatesOverlap(originalbookings, singleBooking);
+                        // add the new booking repeat for each day
+
+
+
+                        if (WeHaveAClash == false)
+                        {
+                            LoadNewBookingElements(booking, singleBooking);
+                        }
+
+                        originalbookings.Add(singleBooking);
+
+                    }
+
+                }
+
+
+
+            }
+
+
             return originalbookings;
         }
 
@@ -109,6 +153,7 @@ namespace ASPCollegeBooking.Business
             singleBooking.ResourceId = booking.ResourceId;
             singleBooking.Room = booking.Room;
             singleBooking.Title = booking.Title;
+            singleBooking.Email = booking.Email;
         }
 
 

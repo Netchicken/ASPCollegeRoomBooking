@@ -1,0 +1,44 @@
+﻿https://dotnetcoretutorials.com/2017/11/02/using-mailkit-send-receive-email-asp-net-core/
+
+
+Email account
+
+Hi Gary Dix,
+A new API key was created on your account: 
+Key ID: 115fe3a6-47557102 
+Description: API Key 
+Expires: never 
+
+Created by User: " <>" 
+Originating IP Address: unknown 
+Request ID: unknown 
+If you or one of your users did not create this API key, please contact Mailgun support immediately at help@mailgun.com. 
+With love,
+The Mailgun Team
+
+
+
+
+https://app.mailgun.com/app/account/setup
+
+public static RestResponse SendSimpleMessage() {
+    RestClient client = new RestClient();
+    client.BaseUrl = "https://api.mailgun.net/v3";
+    client.Authenticator =
+        new HttpBasicAuthenticator("api", "dacfc8d465fc94794cf50028c6834218-115fe3a6-47557102");
+    RestRequest request = new RestRequest();
+    request.AddParameter("domain", "sandbox84efe81bdff848469fe85bdae5d4ecdc.mailgun.org", ParameterType.UrlSegment);
+    request.Resource = "{domain}/messages";
+    request.AddParameter("from", "Mailgun Sandbox <postmaster@sandbox84efe81bdff848469fe85bdae5d4ecdc.mailgun.org>");
+    request.AddParameter("to", "Gary Dix <gary.d@visioncollege.ac.nz>");
+    request.AddParameter("subject", "Hello Gary Dix");
+    request.AddParameter("text", "Congratulations Gary Dix, you just sent an email with Mailgun!  You are truly awesome!");
+    request.Method = Method.POST;
+    return client.Execute(request);
+}
+// You can see a record of this email in your logs: https://app.mailgun.com/app/logs
+
+// You can send up to 300 emails/day from this sandbox server.
+// Next, you should add your own domain so you can send 10,000 emails/month for free.
+
+

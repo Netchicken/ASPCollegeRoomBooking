@@ -9,6 +9,7 @@ namespace ASPCollegeBooking.Models
         public string Title { get; set; }
         public string EventColor { get; set; }
         public bool IsBookable { get; set; }
+        public int MaxOccupancy { get; set; }
 
     }
 }

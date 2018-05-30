@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASPCollegeBooking.Data;
 using ASPCollegeBooking.DTO;
+using ASPCollegeBooking.Email;
 using ASPCollegeBooking.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -44,6 +45,36 @@ namespace ASPCollegeBooking.Controllers
             return View();
         }
 
+
+        public IActionResult Email()
+        {
+            ViewBag.Emailresponse = "Before sending - ";
+            try
+            {
+            var message=    SendSimpleMessageChunk.SendSimpleMessage().Content.ToString();
+                ViewBag.Emailresponse += "Simple Message sent - - - " + message;
+            }
+            catch (Exception e)
+            {
+                //catch errors
+                ViewBag.Emailresponse += "Simple errors " + e.ToString();
+            }
+
+            //try
+            //{
+            //    SendSMTP.SendMessageSmtp();
+            //    ViewBag.Emailresponse += " SMTP sent ";
+            //}
+            //catch (Exception e)
+            //{
+            //    //catch errors
+            //    ViewBag.Emailresponse += " SMTP errors " + e.ToString();
+            //}
+
+            return View();
+        }
+
+
         // GET: Events/Details/5
         public async Task<IActionResult> Details(int id)
         {
@@ -72,7 +103,7 @@ namespace ASPCollegeBooking.Controllers
         public async Task<IActionResult> Create([Bind("ID,ResourceId,EventColor,Start,End,Title,RoomID,IsFullDay,Days,Weeks,Email")] Events events)
         {
             ViewBag.TodayDate = DateTime.Today.ToLongDateString();
-
+            ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
             //get user details save to db
             string UserEmail = User.Identity.Name;
             string[] details = UserEmail.Split('@');
@@ -124,7 +155,7 @@ namespace ASPCollegeBooking.Controllers
         // GET: Events/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-           ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
+            ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
 
             var events = await _context.Events.SingleOrDefaultAsync(m => m.Id == id);
             if (events == null)

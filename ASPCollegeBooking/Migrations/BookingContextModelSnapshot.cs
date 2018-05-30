@@ -64,6 +64,8 @@ namespace ASPCollegeBooking.Migrations
 
                     b.Property<bool>("IsBookable");
 
+                    b.Property<int>("MaxOccupancy");
+
                     b.Property<string>("Title");
 
                     b.HasKey("ID");

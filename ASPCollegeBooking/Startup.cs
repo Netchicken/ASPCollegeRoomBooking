@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ASPCollegeBooking.Data;
 using ASPCollegeBooking.Data;
+using ASPCollegeBooking.Email;
 using ASPCollegeBooking.Models;
 using ASPCollegeBooking.Services;
 using Microsoft.AspNetCore.Localization;
@@ -124,6 +125,10 @@ namespace ASPCollegeBooking
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddMvc();
+            services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
+            services.AddTransient<IEmailService, EmailService>();
+
+
             //start http://romansimuta.com/post/authorization-with-roles-in-asp.net-core-mvc-web-application  authorization with roles
             //Underneath the covers, role-based authorization and claims-based authorization use a requirement, a requirement handler, and a pre-configured policy. These building blocks support the expression of authorization evaluations in code. The result is a richer, reusable, testable authorization structure.
 
