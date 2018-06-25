@@ -36,6 +36,7 @@ namespace ASPCollegeBooking.Business
                 newrooms.Title = room.Title;
                 newrooms.EventColor = room.EventColor;
                 newrooms.IsBookable = room.IsBookable;
+                newrooms.MaxOccupancy = room.MaxOccupancy;
                 allRoomswithInt.Add(newrooms);
             }
 

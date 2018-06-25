@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="~/lib/fullcalendar/dist/fullcalendar.css" />
     <link rel="stylesheet" href="~/lib/fullcalendar-scheduler/dist/scheduler.css" />
     <link href="~/lib/qtip2/dist/jquery.qtip.css" rel="stylesheet" />
-
+    <link href="~/css/style.css" rel="stylesheet" />
     <link href="~/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet" />
 
 
@@ -30,7 +30,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>   @*need this*@
     <script src="~/lib/qtip2/dist/jquery.qtip.js"></script>
     <script src="~/lib/sweetalert/dist/sweetalert.min.js"></script>
-
+    <script src="~/js/main.js"></script>
 
     @*   <link rel="stylesheet" href="~/css/jquery.datetimepicker.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css"/>
@@ -53,18 +53,19 @@
 
     @*</environment>*@
 </head>
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
+
+
+    <!-- Navigation -->
+    <nav id="menu" class="navbar navbar-default navbar-fixed-top">
         <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Events" asp-action="Scheduler" class="navbar-brand">Scheduler</a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                <a class="navbar-brand page-scroll" href="#page-top"><a href="/"><img src="~/images/logo.svg" height="45" alt="Atena" data-retina="true"></a></a>
             </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Events" asp-action="Create">Create an Event</a></li>
@@ -72,13 +73,36 @@
                     <li><a asp-area="" asp-controller="Rooms" asp-action="Index">All Rooms</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="RoomGraphic">Room Plan</a></li>
 
-                    <li><a asp-area="" asp-controller="Events" asp-action="Email">Send Email</a></li>
+                    @*<li><a asp-area="" asp-controller="Events" asp-action="Email">Send Email</a></li>*@
 
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
+            <!-- /.navbar-collapse -->
         </div>
+        <!-- /.container-fluid -->
     </nav>
+
+
+    <!-- Header -->
+    <header id="header">
+        <div class="intro text-center">
+            <div class="overlay">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="intro-text">
+                            <h1>Welcome to the <span class="brand">Vision College</span></h1>
+                            <h2>Room Booking System</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -112,4 +136,9 @@
         </environment>*@
     @RenderSection("Scripts", required: false)
 </body>
+
+
+
+
+
 </html>

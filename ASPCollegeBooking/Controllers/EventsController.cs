@@ -87,12 +87,12 @@ namespace ASPCollegeBooking.Controllers
             return View(events);
         }
 
-        [Authorize]
+
         // GET: Events/Create
         public IActionResult Create()
         {
             ViewBag.TodayDate = DateTime.Today.ToLongDateString();
-            ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
+            ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title", "MaxOccupancy");
             return View();
         }
 

@@ -27,7 +27,31 @@
 
                 <span asp-validation-for="Title" class="text-danger"></span>
 
+                <label class="control-label">How many students in your class?</label>
+
+                <input asp-for="StudentNumbers" class="form-control" min="2" value="0" onchange="myFunction(this.value)" />
+
+                <script>
+                    function myFunction(val) {
+                        @foreach (var item in ViewBag.Roomlist)
+                        {
+                          //  if(item.MaxOccupancy >val )
+
+                        }
+
+                        alert("The input value has changed. The new value is: " + val);
+                    }
+
+
+                </script>
+
+
+
+                <span asp-validation-for="StudentNumbers" class="text-danger"></span>
                 <label class="control-label">Choose Your Room</label>
+
+
+
                 <select asp-for="ResourceId" asp-items="ViewBag.Roomlist" class="form-control">
                     <option>Please select one</option>
                 </select>
@@ -64,14 +88,7 @@
 
                     <span asp-validation-for="Weeks" class="text-danger"></span>
 
-                    ---------
 
-
-                    <label class="control-label">How many students in your class?</label>
-
-                    <input asp-for="StudentNumbers" class="form-control" min="0" value="0" />
-
-                    <span asp-validation-for="StudentNumbers" class="text-danger"></span>
                 </div>
             </div>
 

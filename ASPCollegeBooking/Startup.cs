@@ -14,6 +14,7 @@ using ASPCollegeBooking.Data;
 using ASPCollegeBooking.Email;
 using ASPCollegeBooking.Models;
 using ASPCollegeBooking.Services;
+using DotNetify;
 using Microsoft.AspNetCore.Localization;
 
 namespace ASPCollegeBooking
@@ -50,26 +51,26 @@ namespace ASPCollegeBooking
 
             // Use SQL Database if in Azure, otherwise, use SQLite
             //----------------------
-            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
-            {
-                services.AddDbContext<BookingContext>(options =>
-                    options.UseSqlite("Data Source= RoomBooking.db"));
+            //if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            //{
+            services.AddDbContext<BookingContext>(options =>
+                options.UseSqlite("Data Source= RoomBooking.db"));
 
-                //services.AddDbContext<ApplicationDbContext>(options =>
-                //   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-                services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = admin.db"));
-            }
-            else
-            {
-                services.AddDbContext<BookingContext>(options =>
-                    options.UseSqlite("Data Source = RoomBooking.db"));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = admin.db"));
+            //}
+            //else
+            //{
+            //services.AddDbContext<BookingContext>(options =>
+            //    options.UseSqlite("Data Source = RoomBooking.db"));
 
-                services.AddDbContext<ApplicationDbContext>(options =>
-                   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-                //  services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = admin.db"));
-            }
+            //  services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = admin.db"));
+            //}
             //end------------------------------
 
             ////If this code detects that it is running in production (which indicates the Azure environment), then it uses the connection string you configured to connect to the SQL Database.
@@ -128,6 +129,12 @@ namespace ASPCollegeBooking
             services.AddSingleton<IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             services.AddTransient<IEmailService, EmailService>();
 
+            //http://dotnetify.net/react/Installation
+            services.AddMemoryCache();
+            services.AddSignalR();
+            services.AddDotNetify();
+
+
 
             //start http://romansimuta.com/post/authorization-with-roles-in-asp.net-core-mvc-web-application  authorization with roles
             //Underneath the covers, role-based authorization and claims-based authorization use a requirement, a requirement handler, and a pre-configured policy. These building blocks support the expression of authorization evaluations in code. The result is a richer, reusable, testable authorization structure.
@@ -159,6 +166,12 @@ namespace ASPCollegeBooking
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures
             });
+
+
+            //http://dotnetify.net/react/Installation
+            app.UseWebSockets();
+            app.UseSignalR(routes => routes.MapDotNetifyHub());
+            app.UseDotNetify();
 
 
 
