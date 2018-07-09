@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using ASPCollegeBooking.Business;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +44,9 @@ namespace ASPCollegeBooking
                 options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-NZ") };
             });
 
+
+            services.AddTransient<ITextFileOperations, TextFileOperations>();
+
             //  services.AddDbContext<ApplicationDbContext>(options =>
             //     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -56,10 +60,23 @@ namespace ASPCollegeBooking
             services.AddDbContext<BookingContext>(options =>
                 options.UseSqlite("Data Source= RoomBooking.db"));
 
+            //https://elasticbeanstalk-us-east-2-834575397048.s3.us-east-2.amazonaws.com/RoomBooking.db?X-Amz-Expires=3562&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAILIUT3WXZB3GIMHQ/20180626/us-east-2/s3/aws4_request&X-Amz-Date=20180626T033526Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e7b98f7cf100286eee70656f725b2d948ca0b91fa07200e17591a9f4c5aa52ac
+
+            //  services.AddDbContext<BookingContext>(options => options.UseSqlite("Data Source= RoomBooking.db"));
+
+
+            //https://s3.us-east-2.amazonaws.com/elasticbeanstalk-us-east-2-834575397048/RoomBooking.db  link to DB
+
+
+            //arn:aws:s3:::elasticbeanstalk-us-east-2-834575397048
+
             //services.AddDbContext<ApplicationDbContext>(options =>
             //   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = admin.db"));
+
+            //https://s3.us-east-2.amazonaws.com/elasticbeanstalk-us-east-2-834575397048/admin.db
+
             //}
             //else
             //{

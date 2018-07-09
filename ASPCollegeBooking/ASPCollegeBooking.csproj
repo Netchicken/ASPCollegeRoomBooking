@@ -8,12 +8,18 @@
 
 
   <ItemGroup>
+    <Compile Remove="Business\DataBaseCalls.cs" />
+    <Compile Remove="Business\IDataBaseCalls.cs" />
     <Compile Remove="Data\Migrations\20180521011627_adminroles.cs" />
     <Compile Remove="Data\Migrations\20180521011627_adminroles.Designer.cs" />
     <Compile Remove="Migrations\20180428025901_revertToID.cs" />
     <Compile Remove="Migrations\20180428025901_revertToID.Designer.cs" />
     <Compile Remove="Migrations\20180428033029_NewSetup.cs" />
     <Compile Remove="Migrations\20180428033029_NewSetup.Designer.cs" />
+    <Compile Remove="Migrations\20180709005844_staffnames.cs" />
+    <Compile Remove="Migrations\20180709005844_staffnames.Designer.cs" />
+    <Compile Remove="Migrations\20180709010357_staffnames2.cs" />
+    <Compile Remove="Migrations\20180709010357_staffnames2.Designer.cs" />
   </ItemGroup>
 
   
@@ -55,7 +61,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="RoomBooking.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

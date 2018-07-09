@@ -24,6 +24,7 @@ namespace ASPCollegeBooking.Data
         // public DbSet<RoomBooking> RoomBookings { get; set; }
         // public DbSet<CalendarDB> CalendarDbs { get; set; }
         public DbSet<Events> Events { get; set; }
+        public DbSet<StaffNames> StaffNames { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{

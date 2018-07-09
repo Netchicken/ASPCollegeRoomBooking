@@ -63,11 +63,13 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-                <a class="navbar-brand page-scroll" href="#page-top"><a href="/"><img src="~/images/logo.svg" height="45" alt="Atena" data-retina="true"></a></a>
+                <a class="navbar-brand " href="#page-top"><a href="/"><img src="~/images/logo.svg" height="45" alt="Atena" data-retina="true"></a></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+
+                   @*<li><a asp-area="" asp-controller="StaffNames" asp-action="UpdateStaff">Load data to DB</a></li>*@
                     <li><a asp-area="" asp-controller="Events" asp-action="Create">Create an Event</a></li>
                     <li><a asp-area="" asp-controller="Events" asp-action="Index">Edit an Event</a></li>
                     <li><a asp-area="" asp-controller="Rooms" asp-action="Index">All Rooms</a></li>
@@ -91,9 +93,8 @@
                 <div class="container">
                     <div class="row">
 
-                        <div class="intro-text">
-                            <h1>Welcome to the <span class="brand">Vision College</span></h1>
-                            <h2>Room Booking System</h2>
+                        <div class="intro-text" id="services">
+                            @RenderBody()
                         </div>
                     </div>
                 </div>
@@ -104,7 +105,7 @@
 
 
     <div class="container body-content">
-        @RenderBody()
+        @*@RenderBody()*@
         <hr />
         <footer>
             <p>&copy; Vision College Christchurch - Crafted with coffee</p>

@@ -239,6 +239,7 @@ namespace ASPCollegeBooking.Controllers
 
 
 
+
         //http://romansimuta.com/post/authorization-with-roles-in-asp.net-core-mvc-web-application
         [HttpPost]
         [AllowAnonymous]

@@ -104,12 +104,23 @@ namespace ASPCollegeBooking.Controllers
         {
             ViewBag.TodayDate = DateTime.Today.ToLongDateString();
             ViewBag.Roomlist = new SelectList(or.GetOrderedRooms(), "ID", "Title");
-            //get user details save to db
-            string UserEmail = User.Identity.Name;
-            string[] details = UserEmail.Split('@');
-            //pass it back to the event in the SchedularCustom.js
-            events.Name = details[0];
-            events.Email = UserEmail;
+
+            try
+            {
+                //get user details save to db
+                string UserEmail = User.Identity.Name;
+                string[] details = UserEmail.Split('@');
+                //pass it back to the event in the SchedularCustom.js
+                events.Name = details[0];
+                events.Email = UserEmail;
+            }
+            catch (Exception e)
+            {
+                //person not logged in
+                events.Name = "Not Logged In";
+                events.Email = "Not Logged In";
+            }
+
 
             //is the start date older than the end date?
             if (ModelState.IsValid)
