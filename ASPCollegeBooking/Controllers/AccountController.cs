@@ -103,7 +103,7 @@ namespace ASPCollegeBooking.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "That didn't work, try again");
                     return View(model);
                 }
             }

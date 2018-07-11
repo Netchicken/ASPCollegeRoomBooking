@@ -23,29 +23,107 @@ namespace ASPCollegeBooking.Business
 {
     public class TextFileOperations : ITextFileOperations
     {
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly BookingContext _context;
         private readonly ApplicationDbContext _applicationDbContext;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IHostingEnvironment _environment;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly UserManager<ApplicationUser> _userManager;
         public TextFileOperations(
             BookingContext context,
             IHostingEnvironment hostingEnvironment,
+            SignInManager<ApplicationUser> signInManager,
             IHttpContextAccessor httpContextAccessor,
             ApplicationDbContext applicationDbContext,
-            UserManager<ApplicationUser> userManager)
+            RoleManager<IdentityRole> rolemanager,
+
+                UserManager<ApplicationUser> userManager)
         {
             _environment = hostingEnvironment;
             _httpContextAccessor = httpContextAccessor;
             _context = context;
             _applicationDbContext = applicationDbContext;
+            _roleManager = rolemanager;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public void UploadStaffFile()
         {
+            AddToRoles();
+            return;
 
             //--------------Get the data from the Text file --------------
+            var AllStaffNames = LoadStaffNamesFromFile();
+
+            //add in the ones from the db
+            AllStaffNames.AddRange(RemoveDuplicateStaff());
+
+            //sort the new data and pull out only uniques
+            IOrderedEnumerable<StaffNames> orderedStaffNames = AllStaffNames.Distinct().OrderBy(
+                i => i.Department).ThenBy(i => i.Name);
+
+
+            SaveToStaffNamesTable(orderedStaffNames);
+
+            //whoa! hacked into the authorization to auto add members in
+
+          SaveToIdentityTables(orderedStaffNames);
+        }
+
+        private void SaveToIdentityTables(IOrderedEnumerable<StaffNames> orderedStaffNames)
+        {
+            foreach (var staff in orderedStaffNames)
+            {
+                string fullname = staff.Name;
+
+                //doesn't do all of Cobus De Lang
+
+                String[] name = fullname.Split(' ');
+                RegisterViewModel model = new RegisterViewModel();
+                model.Password = name[0] + name[1];
+
+
+                string NameWithDot = staff.Name.Replace(' ', '.');
+
+                //create a new user
+                var user = new ApplicationUser
+                {
+                    UserName = name[0] + name[1],
+                    FirstName = name[0],
+                    LastName = name[1],
+                    Email = NameWithDot + "@visioncollege.ac.nz"
+                };
+
+               var result = _userManager.CreateAsync(user, model.Password);
+  }
+
+          
+            //  var result2 = 
+              //  var result3 = _signInManager.SignInAsync(user, isPersistent: true);
+
+
+
+                // AddRolesToStaff(user, model);
+        }
+
+        private void AddToRoles()
+        {
+            foreach (var user in _userManager.Users)
+            {
+             var result =   _userManager.AddToRoleAsync(user, "Member");
+            }
+        }
+
+        private void SaveToStaffNamesTable(IOrderedEnumerable<StaffNames> orderedStaffNames)
+        {
+            _context.AddRange(orderedStaffNames);
+            _context.SaveChanges();
+        }
+
+        private List<StaffNames> LoadStaffNamesFromFile()
+        {
             string[] lines = { };
 
             //Gets or sets the absolute path to the directory that contains the web-servable application content files.
@@ -74,52 +152,32 @@ namespace ASPCollegeBooking.Business
                 }
             }
 
+            return AllStaffNames;
+        }
 
-            //--------------Get the data from the Database --------------
-            //needs to run off a link.
+        private void AddRolesToStaff(ApplicationUser user, RegisterViewModel model)
+        {
+            //pass in the user and the pw
+            //  var result = _userManager.CreateAsync(user, model.Password);
 
-            //add in the ones from the db
-            AllStaffNames.AddRange(RemoveDuplicateStaff());
-            //sort the new data and pull out only uniques
-            IOrderedEnumerable<StaffNames> orderedStaffNames = AllStaffNames.Distinct().OrderBy(
-                i => i.Department).ThenBy(i => i.Name);
+            var result = _userManager.CreateAsync(user, model.Password);
 
-            _context.AddRange(orderedStaffNames);
-            _context.SaveChanges();
+            //if (result.IsCompletedSuccessfully)
 
-            //whoa! hacked into the authorization to auto add members in
+            //{
 
-            foreach (var staff in orderedStaffNames)
-            {
-                string fullname = staff.Name;
+            // Add a user to the default role, or any role you prefer here
 
-                //doesn't do all of Cobus De Lang
+            _userManager.AddToRoleAsync(user, "Member");
 
-                String[] name = fullname.Split(' ');
-                RegisterViewModel model = new RegisterViewModel();
-                model.Password = name[0];
+            _signInManager.SignInAsync(user, isPersistent: true);
 
-
-                string NameWithDot = staff.Name.Replace(' ', '.');
-
-                //create a new user
-                var user = new ApplicationUser
-                {
-                    UserName = name[0] + name[1],
-                    Email = NameWithDot + "@visioncollege.ac.nz"
-                };
-
-                //pass in the user and the pw
-                var result = _userManager.CreateAsync(user, model.Password);
-            }
-
-
-
-
+            //  return RedirectToLocal(returnUrl);
+            //}
         }
 
 
-        public void AddToAdmin(List<StaffNames> AllStaffNames)
+        private void AddToAdmin(List<StaffNames> AllStaffNames)
         {
             //https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/microsoft-logins?view=aspnetcore-2.1&tabs=aspnetcore2x
             //  https://www.jerriepelser.com/blog/authenticate-oauth-aspnet-core-2/

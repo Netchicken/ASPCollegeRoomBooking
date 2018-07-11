@@ -22,6 +22,11 @@
     <Compile Remove="Migrations\20180709010357_staffnames2.Designer.cs" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\_Files.cshtml" />
+  </ItemGroup>
+
   
   <ItemGroup>
     <PackageReference Include="DotNetify.SignalR" Version="3.0.1" />
