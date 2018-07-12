@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using ASPCollegeBooking.Business;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -22,6 +23,7 @@ namespace ASPCollegeBooking.Controllers
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
+        private readonly ITextFileOperations _textfileoperations;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
@@ -34,12 +36,14 @@ namespace ASPCollegeBooking.Controllers
         //https://docs.microsoft.com/en-us/aspnet/core/security/authorization/?view=aspnetcore-2.1
 
         public AccountController(
+            ITextFileOperations textfileoperations,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
             RoleManager<IdentityRole> roleManager)
         {
+            _textfileoperations = textfileoperations;
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
@@ -84,8 +88,27 @@ namespace ASPCollegeBooking.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+                //todo load up the staffnames list
+                // todo Created a password from the staffname
+                //todo create an email from the staffname
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                //bool result = _textfileoperations.StaffSignInManager(model.Email, model.Password);
+
+                //if (result == true)
+                //{
+                //    _logger.LogInformation("User logged in.");
+                //    return RedirectToLocal(returnUrl);
+                //}
+                //else 
+                //if(result == false)
+                //{
+                //    ModelState.AddModelError(string.Empty, result + "  That didn't work, try again " + model.Email + " " + model.Password);
+                //    return View(model);
+                //}
+
+
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
@@ -103,7 +126,7 @@ namespace ASPCollegeBooking.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "That didn't work, try again");
+                    ModelState.AddModelError(string.Empty, "That didn't work, try again " + model.Email + " " + model.Password);
                     return View(model);
                 }
             }

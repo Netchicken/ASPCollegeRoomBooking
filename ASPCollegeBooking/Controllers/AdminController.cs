@@ -25,24 +25,24 @@ namespace ASPCollegeBooking.Controllers
 
 
 
-        public ActionResult Index()
-        {
-            ViewData["PageID"] = "Admin";
-            ViewData["Message"] = "Admin page restricted to the super admin user";
+        //public ActionResult Index()
+        //{
+        //    ViewData["PageID"] = "Admin";
+        //    ViewData["Message"] = "Admin page restricted to the super admin user";
 
-            //  List<string> userids = UserManager.UserRoles.Where(a => a.RoleId == "").Select(b => b.UserId).Distinct().ToList();
-            //The first step: get all user id collection as userids based on role from db.UserRoles
+        //    //  List<string> userids = UserManager.UserRoles.Where(a => a.RoleId == "").Select(b => b.UserId).Distinct().ToList();
+        //    //The first step: get all user id collection as userids based on role from db.UserRoles
 
-            // var listUsers = UserManager.GetUserAsync("Member").Result;
-            // The second step: find all users collection from _db.Users which 's Id is contained at userids ;
+        //    // var listUsers = UserManager.GetUserAsync("Member").Result;
+        //    // The second step: find all users collection from _db.Users which 's Id is contained at userids ;
 
 
-            return View();
-        }
-        public IActionResult Settings()
-        {
-            ViewData["Message"] = "Settings page restricted to the super admin user";
-            return View();
-        }
+        //    return View();
+        //}
+        //public IActionResult Settings()
+        //{
+        //    ViewData["Message"] = "Settings page restricted to the super admin user";
+        //    return View();
+        //}
     }
 }

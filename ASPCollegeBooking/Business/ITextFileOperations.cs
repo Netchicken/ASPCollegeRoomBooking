@@ -10,6 +10,7 @@ namespace ASPCollegeBooking.Business
     public interface ITextFileOperations
     {
         void UploadStaffFile();
+        bool StaffSignInManager(string Email, string Password);
         IEnumerable<string> LoadConditionsForAcceptanceText();
         IEnumerable<StaffNames> RemoveDuplicateStaff();
     }

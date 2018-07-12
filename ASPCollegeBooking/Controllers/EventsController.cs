@@ -114,7 +114,7 @@ namespace ASPCollegeBooking.Controllers
                 events.Name = details[0];
                 events.Email = UserEmail;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //person not logged in
                 events.Name = "Not Logged In";

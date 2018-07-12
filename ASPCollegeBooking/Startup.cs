@@ -15,7 +15,7 @@ using ASPCollegeBooking.Data;
 using ASPCollegeBooking.Email;
 using ASPCollegeBooking.Models;
 using ASPCollegeBooking.Services;
-using DotNetify;
+//using DotNetify;
 using Microsoft.AspNetCore.Localization;
 
 namespace ASPCollegeBooking
@@ -148,8 +148,8 @@ namespace ASPCollegeBooking
 
             //http://dotnetify.net/react/Installation
             services.AddMemoryCache();
-            services.AddSignalR();
-            services.AddDotNetify();
+            // services.AddSignalR();
+            //  services.AddDotNetify();
 
 
 
@@ -187,8 +187,8 @@ namespace ASPCollegeBooking
 
             //http://dotnetify.net/react/Installation
             app.UseWebSockets();
-            app.UseSignalR(routes => routes.MapDotNetifyHub());
-            app.UseDotNetify();
+            //   app.UseSignalR(routes => routes.MapDotNetifyHub());
+            //   app.UseDotNetify();
 
 
 

@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.WindowsAzure.Storage.Blob.Protocol;
+
 //using VisitorManagement.Data;
 //using VisitorManagement.DTO;
 //using VisitorManagement.Models;
@@ -49,27 +51,47 @@ namespace ASPCollegeBooking.Business
             _signInManager = signInManager;
         }
 
+        public bool StaffSignInManager(string Email, string Password)
+        {
+            //--------------Get the data from the Text file --------------
+
+
+            var AllStaffNames = LoadStaffNamesFromFile();
+
+            string[] PW = Email.Split(' ');
+
+            //ok this sucks
+            int name = AllStaffNames.Count(a => a.Name == Email);
+
+
+            // int PW = AllStaffNames.Count(a => a.Department == Password);
+
+            if (name > 0 && Password == PW[0])
+            {
+                return true;
+            }
+            return false;
+        }
+
         public void UploadStaffFile()
         {
-            AddToRoles();
-            return;
 
             //--------------Get the data from the Text file --------------
             var AllStaffNames = LoadStaffNamesFromFile();
 
             //add in the ones from the db
-            AllStaffNames.AddRange(RemoveDuplicateStaff());
+         //   AllStaffNames.AddRange(RemoveDuplicateStaff());
 
             //sort the new data and pull out only uniques
             IOrderedEnumerable<StaffNames> orderedStaffNames = AllStaffNames.Distinct().OrderBy(
                 i => i.Department).ThenBy(i => i.Name);
 
 
-            SaveToStaffNamesTable(orderedStaffNames);
+         //   SaveToStaffNamesTable(orderedStaffNames);
 
             //whoa! hacked into the authorization to auto add members in
 
-          SaveToIdentityTables(orderedStaffNames);
+            SaveToIdentityTables(orderedStaffNames);
         }
 
         private void SaveToIdentityTables(IOrderedEnumerable<StaffNames> orderedStaffNames)
@@ -90,29 +112,29 @@ namespace ASPCollegeBooking.Business
                 //create a new user
                 var user = new ApplicationUser
                 {
-                    UserName = name[0] + name[1],
+                    UserName = NameWithDot + "@visioncollege.ac.nz", //name[0] + name[1],
                     FirstName = name[0],
                     LastName = name[1],
                     Email = NameWithDot + "@visioncollege.ac.nz"
                 };
 
-               var result = _userManager.CreateAsync(user, model.Password);
-  }
+                var result = _userManager.CreateAsync(user, model.Password);
+            }
 
-          
+
             //  var result2 = 
-              //  var result3 = _signInManager.SignInAsync(user, isPersistent: true);
+            //  var result3 = _signInManager.SignInAsync(user, isPersistent: true);
 
 
 
-                // AddRolesToStaff(user, model);
+            // AddRolesToStaff(user, model);
         }
 
         private void AddToRoles()
         {
             foreach (var user in _userManager.Users)
             {
-             var result =   _userManager.AddToRoleAsync(user, "Member");
+                var result = _userManager.AddToRoleAsync(user, "Member");
             }
         }
 
