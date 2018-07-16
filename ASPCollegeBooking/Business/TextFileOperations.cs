@@ -34,7 +34,7 @@ namespace ASPCollegeBooking.Business
         private readonly UserManager<ApplicationUser> _userManager;
         public TextFileOperations(
             BookingContext context,
-            IHostingEnvironment hostingEnvironment,
+           IHostingEnvironment hostingEnvironment,
             SignInManager<ApplicationUser> signInManager,
             IHttpContextAccessor httpContextAccessor,
             ApplicationDbContext applicationDbContext,
@@ -80,14 +80,14 @@ namespace ASPCollegeBooking.Business
             var AllStaffNames = LoadStaffNamesFromFile();
 
             //add in the ones from the db
-         //   AllStaffNames.AddRange(RemoveDuplicateStaff());
+            AllStaffNames.AddRange(RemoveDuplicateStaff());
 
             //sort the new data and pull out only uniques
             IOrderedEnumerable<StaffNames> orderedStaffNames = AllStaffNames.Distinct().OrderBy(
                 i => i.Department).ThenBy(i => i.Name);
 
 
-         //   SaveToStaffNamesTable(orderedStaffNames);
+            SaveToStaffNamesTable(orderedStaffNames);
 
             //whoa! hacked into the authorization to auto add members in
 
@@ -218,18 +218,19 @@ namespace ASPCollegeBooking.Business
             foreach (var name in _context.StaffNames.Distinct().ToList())
             //.Select(x => new { x.Name, x.Department })
             {
-                //have to remove 
+                //have to add each unique name to the dictionary 
                 StaffNames staffnames = new StaffNames();
                 staffnames.Name = name.Name;
                 staffnames.Department = name.Department;
                 staffnames.Id = name.Id;
+                //added here
                 if (!StaffnamesDict.ContainsKey(staffnames.Name))
                 {
                     StaffnamesDict.Add(staffnames.Name, staffnames);
                     AllStaffNames.Add(staffnames);
                 }
             }
-
+            //todo pull out all the existing names from the application user db 
             //Empty the Database to remove old values
 
             foreach (var staff in _context.StaffNames.ToList())
@@ -237,6 +238,14 @@ namespace ASPCollegeBooking.Business
                 _context.StaffNames.Remove(staff);
             }
             _context.SaveChanges();
+
+            //empty the identity table
+
+            foreach (var staff in _applicationDbContext.Users.ToList())
+            {
+                _applicationDbContext.Users.Remove(staff);
+            }
+            _applicationDbContext.SaveChanges();
 
             //save the filtered data
             //_context.AddRange(AllStaffNames);

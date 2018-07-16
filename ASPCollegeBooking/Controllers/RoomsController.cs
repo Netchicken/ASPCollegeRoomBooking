@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ASPCollegeBooking.Data;
 using ASPCollegeBooking.Data;
 using ASPCollegeBooking.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASPCollegeBooking.Controllers
 {
@@ -19,7 +20,7 @@ namespace ASPCollegeBooking.Controllers
         {
             _context = context;
         }
-
+        [Authorize]
         // GET: Rooms
         public async Task<IActionResult> Index()
         {
@@ -129,7 +130,7 @@ namespace ASPCollegeBooking.Controllers
             }
             return View(rooms);
         }
-
+        [Authorize]
         // GET: Rooms/Delete/5
         public async Task<IActionResult> Delete(int id)
         {

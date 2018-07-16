@@ -88,32 +88,24 @@ namespace ASPCollegeBooking.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                //todo load up the staffnames list
-                // todo Created a password from the staffname
-                //todo create an email from the staffname
-
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                //bool result = _textfileoperations.StaffSignInManager(model.Email, model.Password);
-
-                //if (result == true)
-                //{
-                //    _logger.LogInformation("User logged in.");
-                //    return RedirectToLocal(returnUrl);
-                //}
-                //else 
-                //if(result == false)
-                //{
-                //    ModelState.AddModelError(string.Empty, result + "  That didn't work, try again " + model.Email + " " + model.Password);
-                //    return View(model);
-                //}
-
-
+             
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToLocal(returnUrl);
+
+                    //var userManager = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>(); var user = userManager.FindByEmail(model.Email);
+                    //switch (result)
+                    //{
+                    //    case SignInStatus.Success:
+                    //        Session["FirstName"] = user.FirstName;
+                    //        Session["LastName"] = user.LastName;
+                    //        return RedirectToLocal(returnUrl);
+                    //    case SignInStatus.LockedOut:
+                    //        // Code Omitted for Brevity }
+
+
+                            return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {

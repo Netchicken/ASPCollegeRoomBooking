@@ -46,6 +46,9 @@ namespace ASPCollegeBooking
 
 
             services.AddTransient<ITextFileOperations, TextFileOperations>();
+            //https://korzh.com/blogs/net-tricks/aspnet-identity-store-user-data-in-claims
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, MyUserClaimsPrincipalFactory>();
+
 
             //  services.AddDbContext<ApplicationDbContext>(options =>
             //     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

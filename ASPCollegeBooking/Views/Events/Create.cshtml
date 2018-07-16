@@ -8,7 +8,7 @@
     <div class="col-md-6">
 
         <h3 class="">
-            Create a New Event for @UserManager.GetUserName(User)
+            Create a New Event for @(User.FindFirst("FirstName").Value) @(User.FindFirst("LastName").Value)
         </h3>
     </div>
     <h3 align="right" class="text-muted"> @ViewBag.TodayDate </h3>
@@ -115,7 +115,7 @@
     </div>
 </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    @*<a asp-action="Index">Back to List</a>*@
 </div>
 
 @section scripts

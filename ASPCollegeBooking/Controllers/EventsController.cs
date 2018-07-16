@@ -87,7 +87,7 @@ namespace ASPCollegeBooking.Controllers
             return View(events);
         }
 
-
+        [Authorize]
         // GET: Events/Create
         public IActionResult Create()
         {
