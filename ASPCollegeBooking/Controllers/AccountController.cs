@@ -88,23 +88,14 @@ namespace ASPCollegeBooking.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+              //  model.RememberMe = true;
              
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
 
-                    //var userManager = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>(); var user = userManager.FindByEmail(model.Email);
-                    //switch (result)
-                    //{
-                    //    case SignInStatus.Success:
-                    //        Session["FirstName"] = user.FirstName;
-                    //        Session["LastName"] = user.LastName;
-                    //        return RedirectToLocal(returnUrl);
-                    //    case SignInStatus.LockedOut:
-                    //        // Code Omitted for Brevity }
-
-
+                    
                             return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

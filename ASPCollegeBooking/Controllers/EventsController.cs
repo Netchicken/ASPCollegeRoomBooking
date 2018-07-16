@@ -29,6 +29,7 @@ namespace ASPCollegeBooking.Controllers
         //event checking in calendar done in the EventsAPIController
 
         // GET: Events
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             foreach (var room in _context.Rooms)

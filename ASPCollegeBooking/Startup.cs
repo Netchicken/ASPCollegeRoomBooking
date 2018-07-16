@@ -126,19 +126,23 @@ namespace ASPCollegeBooking
                 // User settings
                 options.User.RequireUniqueEmail = true;
             });
+            //Is services.ConfigureApplicationCookie defined before or after the services.AddIdentity? If you define it before the services.AddIdentity, your custom values will be overwritten.
 
             //https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.1&tabs=visual-studio%2Caspnetcore2x
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                //A flag indicating if the cookie should be accessible only to servers. Changing this value to false permits client-side scripts to access the cookie and may open your app to cookie theft should your app have a Cross-site scripting (XSS) vulnerability. The default value is true.
+
+                options.Cookie.HttpOnly = false;
+                //   https://github.com/aspnet/Security/issues/1293 Gets or sets the lifespan of a cookie. The TimeSpan after which the authentication ticket stored inside the cookie expires. 
+                options.ExpireTimeSpan = TimeSpan.FromDays(100);
                 // If the LoginPath isn't set, ASP.NET Core defaults 
                 // the path to /Account/Login.
                 options.LoginPath = "/Account/Login";
-                // If the AccessDeniedPath isn't set, ASP.NET Core defaults 
-                // the path to /Account/AccessDenied.
+                // If the AccessDeniedPath isn't set, ASP.NET Core defaults the path to /Account/AccessDenied.
                 options.AccessDeniedPath = "/Account/AccessDenied";
+                //A flag indicating if a new cookie with an updated expiration time should be issued dynamically. This can happen on any request where the current cookie expiration period is more than 50% expired. The new expiration date is moved forward to be the current date plus the ExpireTimespan. 
                 options.SlidingExpiration = true;
             });
 
