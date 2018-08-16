@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ASPCollegeBooking.Data;
-using ASPCollegeBooking.Migrations;
+﻿using ASPCollegeBooking.Data;
 using ASPCollegeBooking.Models;
 using ASPCollegeBooking.Models.AccountViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.WindowsAzure.Storage.Blob.Protocol;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 //using VisitorManagement.Data;
 //using VisitorManagement.DTO;
@@ -143,7 +135,10 @@ namespace ASPCollegeBooking.Business
             _context.AddRange(orderedStaffNames);
             _context.SaveChanges();
         }
-
+        /// <summary>
+        /// Loads the staff names from the text file.
+        /// </summary>
+        /// <returns>list of staff names</returns>
         private List<StaffNames> LoadStaffNamesFromFile()
         {
             string[] lines = { };
@@ -166,6 +161,7 @@ namespace ASPCollegeBooking.Business
                 staffnames.Name = data[0];
                 staffnames.Department = data[1];
 
+                //cut out duplicate names
                 //if the name isn't there, add it in
                 if (!StaffnamesDict.ContainsKey(staffnames.Name))
                 {

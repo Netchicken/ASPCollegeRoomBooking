@@ -27,25 +27,31 @@
 
                 <span asp-validation-for="Title" class="text-danger"></span>
 
-                @*<label class="control-label">How many students in your class?</label>
+                <label class="control-label">How many students in your class?</label>
 
-                    <input asp-for="StudentNumbers" class="form-control" min="2" value="0" onchange="myFunction(this.value)" />
+                <input asp-for="StudentNumbers" class="form-control" min="2" value="0" onchange="myFunction(this.value)" />
 
-                        <script>
-                            function myFunction(val) {
-                                @foreach (var item in ViewBag.Roomlist)
-                                {
-                                  //  if(item.MaxOccupancy >val )
+                @*<script>
+                               function myFunction(val) {
 
+
+                    @foreach (var item in ViewBag.Roomlist)
+                                    {
+                                        if (item.MaxOccupancy > val)
+                                        {
+
+
+                                        }
+
+                                  }
+
+                                    alert("The input value has changed. The new value is: " + val);
                                 }
 
-                                alert("The input value has changed. The new value is: " + val);
-                            }
 
+                            </script>*@
 
-                        </script>
-
-                        <span asp-validation-for="StudentNumbers" class="text-danger"></span>*@
+                <span asp-validation-for="StudentNumbers" class="text-danger"></span>
 
                 <label class="control-label">Choose Your Room</label>
 

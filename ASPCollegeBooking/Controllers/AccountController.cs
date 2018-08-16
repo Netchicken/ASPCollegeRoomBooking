@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using ASPCollegeBooking.Business;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using ASPCollegeBooking.Data;
+﻿using ASPCollegeBooking.Business;
 using ASPCollegeBooking.Extensions;
 using ASPCollegeBooking.Models;
 using ASPCollegeBooking.Models.AccountViewModels;
 using ASPCollegeBooking.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ASPCollegeBooking.Controllers
 {
@@ -88,15 +83,15 @@ namespace ASPCollegeBooking.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-              //  model.RememberMe = true;
-             
+                //  model.RememberMe = true;
+
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
 
-                    
-                            return RedirectToLocal(returnUrl);
+
+                    return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -255,12 +250,28 @@ namespace ASPCollegeBooking.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+                //enter first name and last name, with space between 
+                model.Email = model.Email.Trim();
+                //get full name to add to db
+                string[] FullName = model.Email.Split(" ");
+                //replace space with dot
+                string name = model.Email.Replace(' ', '.');
+                //add email address
+                model.Email = name + "@visioncollege.ac.nz";
+
+
+
+
+
                 //create a new user
                 var user = new ApplicationUser
                 {
                     UserName = model.Email,
-                    Email = model.Email
+                    Email = model.Email,
+                    FirstName = FullName[0],
+                    LastName = FullName[1]
                 };
+
                 //pass in the user and the pw
                 var result = await _userManager.CreateAsync(user, model.Password);
 

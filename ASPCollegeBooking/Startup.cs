@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ASPCollegeBooking.Data;
-using ASPCollegeBooking.Data;
+//using ASPCollegeBooking.Data;
 using ASPCollegeBooking.Email;
 using ASPCollegeBooking.Models;
 using ASPCollegeBooking.Services;
