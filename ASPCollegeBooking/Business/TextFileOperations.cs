@@ -226,7 +226,7 @@ namespace ASPCollegeBooking.Business
                     AllStaffNames.Add(staffnames);
                 }
             }
-            //todo pull out all the existing names from the application user db 
+            //pull out all the existing names from the application user db 
             //Empty the Database to remove old values
 
             foreach (var staff in _context.StaffNames.ToList())

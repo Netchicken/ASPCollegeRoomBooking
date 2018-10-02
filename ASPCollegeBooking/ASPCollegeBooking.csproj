@@ -65,7 +65,7 @@
 
   <ItemGroup>
     <None Update="admin.db">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="RoomBooking.db">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ASPCollegeBooking.Controllers
 {
+   
     public class EventsController : Controller
     {
         private readonly BookingContext _context;

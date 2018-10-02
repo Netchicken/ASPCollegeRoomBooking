@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ASPCollegeBooking.Business;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ASPCollegeBooking.Data;
-using ASPCollegeBooking.DTO;
+﻿using ASPCollegeBooking.Business;
 using ASPCollegeBooking.Data;
 using ASPCollegeBooking.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ASPCollegeBooking.Controllers
 {
@@ -44,7 +39,7 @@ namespace ASPCollegeBooking.Controllers
             //    allRoomswithInt.Add(newrooms);
             //}
 
-            OrderedRooms or = new OrderedRooms(_context);
+            var or = new OrderedRooms(_context);
 
             return or.GetOrderedRooms(); //allRoomswithInt.OrderBy(r => r.ID);
         }
@@ -53,17 +48,11 @@ namespace ASPCollegeBooking.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRooms([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var rooms = await _context.Rooms.SingleOrDefaultAsync(m => m.ID == id);
 
-            if (rooms == null)
-            {
-                return NotFound();
-            }
+            if (rooms == null) return NotFound();
 
             return Ok(rooms);
         }
@@ -72,15 +61,9 @@ namespace ASPCollegeBooking.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRooms([FromRoute] int id, [FromBody] Rooms rooms)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            if (id != rooms.ID)
-            {
-                return BadRequest();
-            }
+            if (id != rooms.ID) return BadRequest();
 
             _context.Entry(rooms).State = EntityState.Modified;
 
@@ -107,10 +90,7 @@ namespace ASPCollegeBooking.Controllers
         [HttpPost]
         public async Task<IActionResult> PostRooms([FromBody] Rooms rooms)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             _context.Rooms.Add(rooms);
             await _context.SaveChangesAsync();
@@ -122,16 +102,10 @@ namespace ASPCollegeBooking.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRooms([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var rooms = await _context.Rooms.SingleOrDefaultAsync(m => m.ID == id);
-            if (rooms == null)
-            {
-                return NotFound();
-            }
+            if (rooms == null) return NotFound();
 
             _context.Rooms.Remove(rooms);
             await _context.SaveChangesAsync();

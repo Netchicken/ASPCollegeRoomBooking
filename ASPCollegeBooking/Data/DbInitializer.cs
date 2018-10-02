@@ -1,12 +1,10 @@
-﻿using System;
-using System.IO;
-using ASPCollegeBooking.Data;
-using System.Threading.Tasks;
-using ASPCollegeBooking.Data;
-using ASPCollegeBooking.Models;
+﻿using ASPCollegeBooking.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 //http://romansimuta.com/post/authorization-with-roles-in-asp.net-core-mvc-web-application
 
@@ -27,11 +25,9 @@ namespace ASPCollegeBooking.Data
             foreach (var roleName in roleNames)
             {
                 var roleExist = await RoleManager.RoleExistsAsync(roleName);
-                if (!roleExist)
-                {
-                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
-                }
+                if (!roleExist) roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
             }
+
             await DoWeHaveAdminYet(serviceProvider);
         }
 
@@ -57,12 +53,9 @@ namespace ASPCollegeBooking.Data
                     UserName = config.GetSection("AppSettings")["UserEmail"],
                     Email = config.GetSection("AppSettings")["UserEmail"]
                 };
-                string UserPassword = config.GetSection("AppSettings")["UserPassword"];
+                var UserPassword = config.GetSection("AppSettings")["UserPassword"];
                 var createPowerUser = await userManager.CreateAsync(poweruser, UserPassword);
-                if (createPowerUser.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(poweruser, "Admin");
-                }
+                if (createPowerUser.Succeeded) await userManager.AddToRoleAsync(poweruser, "Admin");
             }
         }
     }
